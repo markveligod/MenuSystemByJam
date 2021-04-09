@@ -13,5 +13,9 @@ UCLASS()
 class MENUSYSTEMBYJAM_API UMSBJGameInstance : public UGameInstance
 {
 	GENERATED_BODY()
-	
+public:
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Levels Editor")
+		FName NameStartLevel = NAME_None;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Levels Editor")
+		FName NameMenuLevel = NAME_None;
 };

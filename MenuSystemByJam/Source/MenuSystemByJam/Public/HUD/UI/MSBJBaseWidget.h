@@ -6,6 +6,7 @@
 #include "Blueprint/UserWidget.h"
 #include "MSBJBaseWidget.generated.h"
 
+class AMenuSystemByJamGameModeBase;
 /**
  * 
  */
@@ -20,5 +21,6 @@ public:
 protected:
 	UPROPERTY(Transient, meta = (BindWidgetAnim))
 		UWidgetAnimation* ShowAnimation;
-	
+
+	AMenuSystemByJamGameModeBase* GetCurrentGameMode() const;
 };
