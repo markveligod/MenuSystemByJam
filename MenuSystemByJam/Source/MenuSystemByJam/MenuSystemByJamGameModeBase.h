@@ -1,5 +1,13 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
+/*
+ * By Mark Veligod
+ * Company Name: VeligodStudio
+ * GitHub: https://github.com/markveligod
+ * Itch: https://veligodstudio.itch.io/
+ * Contact: markveligod@yandex.ru
+ */
+
 #pragma once
 
 #include "CoreMinimal.h"

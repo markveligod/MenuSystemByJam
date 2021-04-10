@@ -1,5 +1,10 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
+/*
+ * By Mark Veligod
+ * Company Name: VeligodStudio
+ * GitHub: https://github.com/markveligod
+ * Itch: https://veligodstudio.itch.io/
+ * Contact: markveligod@yandex.ru
+ */
 
 #include "HUD/UI/MSBJMenuWidget.h"
 #include "Kismet/GameplayStatics.h"
