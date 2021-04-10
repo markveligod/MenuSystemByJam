@@ -28,6 +28,9 @@ protected:
 	UPROPERTY(meta = (BindWidget))
 		UButton* QuitButton;
 
+	UPROPERTY(Transient, meta = (BindWidgetAnim))
+		UWidgetAnimation* EndAnimation;
+
 	virtual void NativeOnInitialized() override;
 private:
 	UFUNCTION()

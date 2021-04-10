@@ -27,4 +27,6 @@ protected:
 	
 private:
 	EMSBJGameMenuState CurrentState = EMSBJGameMenuState::InProgress;
+
+	void SetStartPlaySettings();
 };

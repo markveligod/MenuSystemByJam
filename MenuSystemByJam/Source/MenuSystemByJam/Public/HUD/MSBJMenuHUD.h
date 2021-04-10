@@ -16,6 +16,8 @@ class MENUSYSTEMBYJAM_API AMSBJMenuHUD : public AHUD
 {
 	GENERATED_BODY()
 
+public:
+
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")
 		TSubclassOf<UMSBJBaseWidget> MenuHudWidgetClass;

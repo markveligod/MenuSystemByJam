@@ -29,6 +29,7 @@ void UMSBJMenuWidget::OnStartGame()
 	if (!GetWorld())
 		return;
 	const auto GameInst = Cast<UMSBJGameInstance>(GetWorld()->GetGameInstance());
+	PlayAnimation(this->EndAnimation);
 	UGameplayStatics::OpenLevel(GetWorld(), GameInst->NameStartLevel);
 }
 
@@ -56,6 +57,7 @@ void UMSBJMenuWidget::OnCreditsGame()
 
 void UMSBJMenuWidget::OnQuitGame()
 {
+	PlayAnimation(this->EndAnimation);
 	UKismetSystemLibrary::QuitGame(this, GetOwningPlayer(), EQuitPreference::Quit, true);
 	UE_LOG(LogMSBJMenuWidget, Display, TEXT("Goodbye!"));
 }

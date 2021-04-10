@@ -7,6 +7,7 @@
 #include "MSBJBaseWidget.generated.h"
 
 class AMenuSystemByJamGameModeBase;
+
 /**
  * 
  */

@@ -8,7 +8,6 @@
 
 DEFINE_LOG_CATEGORY_STATIC(LogMSBJMenuHUD, All, All);
 
-
 void AMSBJMenuHUD::BeginPlay()
 {
 	Super::BeginPlay();

@@ -11,6 +11,7 @@ class UTextBlock;
 class UButton;
 class UCheckBox;
 class UComboBox;
+class USoundClass;
 
 /**
  * 
@@ -24,6 +25,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 		void SetNewScreenSize(int32 X, int32 Y);
 	
+	UFUNCTION(BlueprintCallable)
+		void SetQualityGame(int32 NumQuality);
+
 protected:
 	UPROPERTY(meta = (BindWidget))
 		USlider* MusicSlider;
@@ -37,9 +41,18 @@ protected:
 
 	UPROPERTY(meta = (BindWidget))
 		UButton* BackButton;
+	UPROPERTY(meta = (BindWidget))
+		UButton* LangRuButton;
+	UPROPERTY(meta = (BindWidget))
+		UButton* LangEnButton;
 
 	UPROPERTY(meta = (BindWidget))
 		UCheckBox* FullScreenCheckBox;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sound classes Editor")
+		USoundClass* MusicMenuClass;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sound classes Editor")
+		USoundClass* SoundMenuClass;
 
 	virtual void NativeOnInitialized() override;
 
@@ -55,5 +68,11 @@ private:
 
 	UFUNCTION()
 		void OnFullScreenCheck(bool bIsChecked);
+
+	UFUNCTION()
+		void OnRuLangChanged();
+
+	UFUNCTION()
+		void OnEnLangChanged();
 
 };
