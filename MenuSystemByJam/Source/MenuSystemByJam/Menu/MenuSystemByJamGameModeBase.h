@@ -12,7 +12,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
-#include "MSBJDataTypes.h"
+#include "Menu/Public/MSBJDataTypes.h"
 #include "MenuSystemByJamGameModeBase.generated.h"
 
 /**

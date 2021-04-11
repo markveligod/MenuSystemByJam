@@ -12,7 +12,7 @@ public class MenuSystemByJam : ModuleRules
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
 
-		PublicIncludePaths.AddRange(new string[] { "MenuSystemByJam/Public/HUD", "MenuSystemByJam/Public/HUD/UI" });
+		PublicIncludePaths.AddRange(new string[] { "MenuSystemByJam", "MenuSystemByJam/Menu", "MenuSystemByJam/Menu/Public", "MenuSystemByJam/Menu/Public/HUD", "MenuSystemByJam/Menu/Public/HUD/UI" });
 
 		// Uncomment if you are using Slate UI
 		// PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });

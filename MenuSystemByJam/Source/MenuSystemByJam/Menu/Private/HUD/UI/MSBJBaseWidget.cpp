@@ -7,7 +7,7 @@
  */
 
 #include "HUD/UI/MSBJBaseWidget.h"
-#include "MenuSystemByJam/MenuSystemByJamGameModeBase.h"
+#include "Menu/MenuSystemByJamGameModeBase.h"
 
 void UMSBJBaseWidget::Show()
 {

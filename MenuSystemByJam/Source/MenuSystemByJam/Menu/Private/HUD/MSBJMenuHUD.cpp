@@ -9,7 +9,7 @@
 #include "HUD/MSBJMenuHUD.h"
 #include "HUD/UI/MSBJBaseWidget.h"
 #include "Kismet/GameplayStatics.h"
-#include "MenuSystemByJam/MenuSystemByJamGameModeBase.h"
+#include "Menu/MenuSystemByJamGameModeBase.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogMSBJMenuHUD, All, All);
 

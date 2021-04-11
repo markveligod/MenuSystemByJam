@@ -9,8 +9,8 @@
 #include "HUD/UI/MSBJMenuWidget.h"
 #include "Kismet/GameplayStatics.h"
 #include "Components/Button.h"
-#include "MenuSystemByJam/MenuSystemByJamGameModeBase.h"
-#include "MenuSystemByJam/Public/MSBJGameInstance.h"
+#include "Menu/MenuSystemByJamGameModeBase.h"
+#include "Menu/Public/MSBJGameInstance.h"
 #include "Kismet/KismetSystemLibrary.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogMSBJMenuWidget, All, All);

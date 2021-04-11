@@ -10,7 +10,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/HUD.h"
-#include "MenuSystemByJam/Public/MSBJDataTypes.h"
+#include "Menu/Public/MSBJDataTypes.h"
 #include "MSBJMenuHUD.generated.h"
 
 class UMSBJBaseWidget;

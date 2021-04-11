@@ -6,5 +6,5 @@
  * Contact: markveligod@yandex.ru
  */
 
-#include "MSBJGameInstance.h"
+#include "Menu/Public/MSBJGameInstance.h"
 

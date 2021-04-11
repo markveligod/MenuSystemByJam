@@ -11,7 +11,7 @@
 #include "Components/CheckBox.h"
 #include "Components/Slider.h"
 #include "Components/TextBlock.h"
-#include "MenuSystemByJam/MenuSystemByJamGameModeBase.h"
+#include "Menu/MenuSystemByJamGameModeBase.h"
 #include "GameFramework/GameUserSettings.h"
 #include "Kismet/KismetInternationalizationLibrary.h"
 #include "Sound/SoundClass.h"

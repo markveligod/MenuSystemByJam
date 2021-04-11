@@ -8,7 +8,7 @@
 
 #include "HUD/UI/MSBJCreditsWidget.h"
 #include "Components/Button.h"
-#include "MenuSystemByJam/MenuSystemByJamGameModeBase.h"
+#include "Menu/MenuSystemByJamGameModeBase.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogMSBJCreditsWidget, All, All);
 
