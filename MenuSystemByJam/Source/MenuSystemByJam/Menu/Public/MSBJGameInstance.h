@@ -24,4 +24,16 @@ public:
 		FName NameStartLevel = NAME_None;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Levels Editor")
 		FName NameMenuLevel = NAME_None;
+
+	virtual void StartGameInstance() override;
+
+	EWindowMode::Type GetCurrentWindowMode() const;
+	void GetScreenViewport(int32& X, int32& Y);
+
+private:
+	EWindowMode::Type CurrentWindowMode = EWindowMode::Fullscreen;
+	int32 ScreenX;
+	int32 ScreenY;
+	
+	
 };

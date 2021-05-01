@@ -8,3 +8,17 @@
 
 #include "Menu/Public/MSBJGameInstance.h"
 
+void UMSBJGameInstance::StartGameInstance()
+{
+	
+}
+
+EWindowMode::Type UMSBJGameInstance::GetCurrentWindowMode() const
+{
+	
+}
+
+void UMSBJGameInstance::GetScreenViewport(int32& X, int32& Y)
+{
+	
+}
