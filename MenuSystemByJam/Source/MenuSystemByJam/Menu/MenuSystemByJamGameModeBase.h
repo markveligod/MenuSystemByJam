@@ -15,6 +15,8 @@
 #include "Menu/Public/MSBJDataTypes.h"
 #include "MenuSystemByJamGameModeBase.generated.h"
 
+class UMSBJGameInstance;
+
 /**
  * 
  */
@@ -34,7 +36,10 @@ public:
 protected:
 	
 private:
+	//Pointer Classes
+	UMSBJGameInstance* GameInstance;
+	
+	//Variables	
 	EMSBJGameMenuState CurrentState = EMSBJGameMenuState::InProgress;
 
-	void SetStartPlaySettings();
 };

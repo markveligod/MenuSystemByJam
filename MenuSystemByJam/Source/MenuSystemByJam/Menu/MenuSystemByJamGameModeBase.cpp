@@ -11,9 +11,8 @@
 #include "MenuSystemByJamGameModeBase.h"
 #include "HUD/MSBJMenuHUD.h"
 #include "HUD/MSBJMenuController.h"
-#include "GameFramework/GameUserSettings.h"
-#include "Kismet/KismetInternationalizationLibrary.h"
 #include "Kismet/KismetSystemLibrary.h"
+#include "MSBJGameInstance.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogMSBJGameModeBase, All, All);
 
@@ -26,7 +25,12 @@ AMenuSystemByJamGameModeBase::AMenuSystemByJamGameModeBase()
 void AMenuSystemByJamGameModeBase::StartPlay()
 {
 	Super::StartPlay();
-	this->SetStartPlaySettings();
+	
+	this->GameInstance = Cast<UMSBJGameInstance>(GetWorld()->GetGameInstance());
+	
+	checkf(this->GameInstance, TEXT("Game instance is nullptr"));
+	
+	this->GameInstance->RunCurrentUserSettings();
 	this->SetGameState(this->CurrentState);
 }
 
@@ -37,27 +41,7 @@ const EMSBJGameMenuState& AMenuSystemByJamGameModeBase::GetCurrentState() const
 
 void AMenuSystemByJamGameModeBase::SetGameState(EMSBJGameMenuState NewState)
 {
-	if (NewState == this->CurrentState)
-		return;
 	this->CurrentState = NewState;
 	this->OnGameMenuStateChangedSignature.Broadcast(NewState);
 }
 
-void AMenuSystemByJamGameModeBase::SetStartPlaySettings()
-{
-	const auto UserSettings = UGameUserSettings::GetGameUserSettings();
-	if (!UserSettings)
-	{
-		UE_LOG(LogMSBJGameModeBase, Error, TEXT("User Settings is nullptr"));
-		return;
-	}
-	UserSettings->SetFullscreenMode(EWindowMode::Fullscreen);
-	UserSettings->SetScreenResolution(FIntPoint(1920, 1080));
-	UserSettings->ApplySettings(false);
-
-	const auto DefaultLanguagePlayer = UKismetSystemLibrary::GetDefaultLanguage();
-	if (DefaultLanguagePlayer == "ru-RU")
-		UKismetInternationalizationLibrary::SetCurrentCulture(FString("ru-RU"), false);
-	else
-		UKismetInternationalizationLibrary::SetCurrentCulture(FString("en"), false);
-}
