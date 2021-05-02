@@ -18,6 +18,9 @@ class UButton;
 class UCheckBox;
 class UComboBox;
 class USoundClass;
+class UComboBox;
+class UMSBJGameInstance;
+class UGameUserSettings;
 
 /**
  * 
@@ -29,10 +32,11 @@ class MENUSYSTEMBYJAM_API UMSBJOptionsWidget : public UMSBJBaseWidget
 
 public:
 	UFUNCTION(BlueprintCallable)
-		void SetNewScreenSize(int32 X, int32 Y);
+		void SetNewScreenSize(FString NewSize);
 	
 	UFUNCTION(BlueprintCallable)
 		void SetQualityGame(int32 NumQuality);
+
 
 protected:
 	UPROPERTY(meta = (BindWidget))
@@ -63,6 +67,8 @@ protected:
 	virtual void NativeOnInitialized() override;
 
 private:
+	UMSBJGameInstance* GameInst;
+	UGameUserSettings* UserSettings;
 	UFUNCTION()
 		void OnChangedMusicSlider(float Value);
 

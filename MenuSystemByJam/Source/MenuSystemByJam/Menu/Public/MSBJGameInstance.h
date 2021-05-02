@@ -36,6 +36,9 @@ public:
 	FString GetCurrentLanguage() const;
 	void SetCurrentLanguage(FString NewLang);
 
+	UFUNCTION(BlueprintCallable)
+	TArray <FIntPoint> GetArrayScreenSize() const;
+
 private:
 	EWindowMode::Type CurrentWindowMode;
 	FIntPoint CurrentScreen;

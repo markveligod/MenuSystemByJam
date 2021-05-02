@@ -7,6 +7,8 @@
  */
 
 #include "HUD/UI/MSBJOptionsWidget.h"
+
+#include "MSBJGameInstance.h"
 #include "Components/Button.h"
 #include "Components/CheckBox.h"
 #include "Components/Slider.h"
@@ -18,37 +20,31 @@
 
 DEFINE_LOG_CATEGORY_STATIC(LogMSBJOptionsWidget, All, All);
 
-void UMSBJOptionsWidget::SetNewScreenSize(int32 X, int32 Y)
+void UMSBJOptionsWidget::SetNewScreenSize(FString NewSize)
 {
-	const auto UserSettings = UGameUserSettings::GetGameUserSettings();
-	if (!UserSettings)
-	{
-		UE_LOG(LogMSBJOptionsWidget, Error, TEXT("User Settings is nullptr"));
-		return;
-	}
-	UserSettings->SetScreenResolution(FIntPoint(X, Y));
-	UserSettings->ApplySettings(false);
+	int32 TempX = FCString::Atoi(*NewSize);
+	int32 TempIndex;
+	if (!NewSize.FindChar('x', TempIndex))
+		UE_LOG(LogMSBJOptionsWidget, Error, TEXT("x char is not found"));
+	int32 TempY = FCString::Atoi(&NewSize[TempIndex + 1]);
+	UE_LOG(LogMSBJOptionsWidget, Display, TEXT("X: %d = Y: %d"), TempX, TempY);
+	
+	this->UserSettings->SetScreenResolution(FIntPoint(TempX, TempY));
+	this->UserSettings->ApplySettings(false);
 }
 
 void UMSBJOptionsWidget::SetQualityGame(int32 NumQuality)
 {
-	const auto UserSettings = UGameUserSettings::GetGameUserSettings();
-	if (!UserSettings)
-	{
-		UE_LOG(LogMSBJOptionsWidget, Error, TEXT("User Settings is nullptr"));
-		return;
-	}
-
-	UserSettings->SetTextureQuality(NumQuality);
-	UserSettings->SetAntiAliasingQuality(NumQuality);
-	UserSettings->SetFoliageQuality(NumQuality);
-	UserSettings->SetPostProcessingQuality(NumQuality);
-	UserSettings->SetShadingQuality(NumQuality);
-	UserSettings->SetShadowQuality(NumQuality);
-	UserSettings->SetViewDistanceQuality(NumQuality);
-	UserSettings->SetVisualEffectQuality(NumQuality);
+	this->UserSettings->SetTextureQuality(NumQuality);
+	this->UserSettings->SetAntiAliasingQuality(NumQuality);
+	this->UserSettings->SetFoliageQuality(NumQuality);
+	this->UserSettings->SetPostProcessingQuality(NumQuality);
+	this->UserSettings->SetShadingQuality(NumQuality);
+	this->UserSettings->SetShadowQuality(NumQuality);
+	this->UserSettings->SetViewDistanceQuality(NumQuality);
+	this->UserSettings->SetVisualEffectQuality(NumQuality);
 	
-	UserSettings->ApplySettings(false);
+	this->UserSettings->ApplySettings(false);
 }
 
 void UMSBJOptionsWidget::NativeOnInitialized()
@@ -59,6 +55,13 @@ void UMSBJOptionsWidget::NativeOnInitialized()
 		UE_LOG(LogMSBJOptionsWidget, Error, TEXT("Lol NativeOnInitialized is nullptr"));
 		return;
 	}
+
+	this->GameInst = Cast<UMSBJGameInstance>(GetWorld()->GetGameInstance());
+	this->UserSettings = UGameUserSettings::GetGameUserSettings();
+
+	checkf(this->GameInst, TEXT("Game Instance is nullptr"));
+	checkf(this->UserSettings, TEXT("User settings is nullptr"));
+	
 	this->MusicSlider->OnValueChanged.AddDynamic(this, &UMSBJOptionsWidget::OnChangedMusicSlider);
 	this->SoundSlider->OnValueChanged.AddDynamic(this, &UMSBJOptionsWidget::OnChangedSoundSlider);
 	this->BackButton->OnClicked.AddDynamic(this, &UMSBJOptionsWidget::OnComeBack);
@@ -104,15 +107,9 @@ void UMSBJOptionsWidget::OnComeBack()
 
 void UMSBJOptionsWidget::OnFullScreenCheck(bool bIsChecked)
 {
-	const auto UserSettings = UGameUserSettings::GetGameUserSettings();
-	if (!UserSettings)
-	{
-		UE_LOG(LogMSBJOptionsWidget, Error, TEXT("User Settings is nullptr"));
-		return;
-	}
 	UE_LOG(LogMSBJOptionsWidget, Display, TEXT("Full Screen: %d"), bIsChecked);
-	UserSettings->SetFullscreenMode(bIsChecked == true ? EWindowMode::Fullscreen : EWindowMode::Windowed);
-	UserSettings->ApplySettings(false);
+	this->UserSettings->SetFullscreenMode(bIsChecked == true ? EWindowMode::Fullscreen : EWindowMode::Windowed);
+	this->UserSettings->ApplySettings(false);
 }
 
 void UMSBJOptionsWidget::OnRuLangChanged()

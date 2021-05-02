@@ -57,3 +57,8 @@ void UMSBJGameInstance::SetCurrentLanguage(FString NewLang)
 {
 	this->CurrentLanguage = NewLang;
 }
+
+TArray<FIntPoint> UMSBJGameInstance::GetArrayScreenSize() const
+{
+	return (this->ArrayScreenSize);
+}
