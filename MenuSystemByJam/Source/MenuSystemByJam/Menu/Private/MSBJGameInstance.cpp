@@ -7,9 +7,7 @@
  */
 
 #include "Menu/Public/MSBJGameInstance.h"
-#include "Kismet/KismetInternationalizationLibrary.h"
 #include "Kismet/KismetSystemLibrary.h"
-#include "GameFramework/GameUserSettings.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogMSBJGameInstance, All, All);
 
@@ -17,12 +15,17 @@ void UMSBJGameInstance::OnStart()
 {
 	Super::OnStart();
 
-	this->UserSettings = UGameUserSettings::GetGameUserSettings();
-	checkf(this->UserSettings, TEXT("User Settings is nullptr"));
+	this->SetCurrentWindowMode(EWindowMode::Fullscreen);
+	UE_LOG(LogMSBJGameInstance, Display, TEXT("Default Window Mode: Fullscreen type"))
 	
-	this->StartDefaultLanguage();
-	this->StartDefaultWindowMode();
-	this->StartDefaultScreenSize();
+	if (!UKismetSystemLibrary::GetConvenientWindowedResolutions(this->ArrayScreenSize))
+		UE_LOG(LogMSBJGameInstance, Error, TEXT("Array screen size is null [system error]"));
+	
+	this->CurrentScreen = this->ArrayScreenSize[0];
+	UE_LOG(LogMSBJGameInstance, Display, TEXT("Default Screen Size: %d - %d"), this->CurrentScreen.X, this->CurrentScreen.Y);
+
+	this->CurrentLanguage = UKismetSystemLibrary::GetDefaultLanguage();
+	UE_LOG(LogMSBJGameInstance, Display, TEXT("Default Language: %s"), *this->CurrentLanguage);
 }
 
 EWindowMode::Type UMSBJGameInstance::GetCurrentWindowMode() const
@@ -45,48 +48,12 @@ void UMSBJGameInstance::SetScreenViewport(FIntPoint NewScreen)
 	this->CurrentScreen = NewScreen;
 }
 
-void UMSBJGameInstance::RunCurrentUserSettings()
+FString UMSBJGameInstance::GetCurrentLanguage() const
 {
-	UE_LOG(LogMSBJGameInstance, Display, TEXT("X: %d = Y: %d"), this->CurrentScreen.X, this->CurrentScreen.Y);
-	this->RunCurrentLanguage();
-	//this->RunCurrentWindow();
-	//this->RunCurrentScreenSize();
+	return (this->CurrentLanguage);
 }
 
-void UMSBJGameInstance::StartDefaultWindowMode()
+void UMSBJGameInstance::SetCurrentLanguage(FString NewLang)
 {
-	this->SetCurrentWindowMode(EWindowMode::Fullscreen);
-}
-
-void UMSBJGameInstance::StartDefaultLanguage()
-{
-	this->CurrentLanguage = UKismetSystemLibrary::GetDefaultLanguage();
-}
-
-void UMSBJGameInstance::StartDefaultScreenSize()
-{
-	if (!UKismetSystemLibrary::GetConvenientWindowedResolutions(this->ArrayScreenSize))
-		UE_LOG(LogMSBJGameInstance, Error, TEXT("Array screen size is null [system error]"));
-
-	this->CurrentScreen = this->ArrayScreenSize[0];
-}
-
-void UMSBJGameInstance::RunCurrentWindow()
-{
-	this->UserSettings->SetFullscreenMode(this->GetCurrentWindowMode());
-	this->UserSettings->ApplySettings(false);
-}
-
-void UMSBJGameInstance::RunCurrentLanguage()
-{
-	if (this->CurrentLanguage == "ru-RU")
-		UKismetInternationalizationLibrary::SetCurrentCulture(FString("ru-RU"), false);
-	else
-		UKismetInternationalizationLibrary::SetCurrentCulture(FString("en"), false);
-}
-
-void UMSBJGameInstance::RunCurrentScreenSize()
-{
-	this->UserSettings->SetScreenResolution(this->GetScreenViewport());
-	this->UserSettings->ApplySettings(false);
+	this->CurrentLanguage = NewLang;
 }

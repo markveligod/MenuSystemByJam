@@ -38,8 +38,14 @@ protected:
 private:
 	//Pointer Classes
 	UMSBJGameInstance* GameInstance;
+	UGameUserSettings* UserSettings;
 	
 	//Variables	
 	EMSBJGameMenuState CurrentState = EMSBJGameMenuState::InProgress;
 
+	//Functions
+	void StartPlayGameModeSettings();
+
 };
+
+

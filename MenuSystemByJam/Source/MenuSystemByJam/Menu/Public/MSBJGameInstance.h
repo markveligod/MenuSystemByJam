@@ -33,21 +33,14 @@ public:
 	FIntPoint GetScreenViewport() const;
 	void SetScreenViewport(FIntPoint NewScreen);
 
-	void RunCurrentUserSettings();
+	FString GetCurrentLanguage() const;
+	void SetCurrentLanguage(FString NewLang);
 
 private:
-	EWindowMode::Type CurrentWindowMode = EWindowMode::Fullscreen;
+	EWindowMode::Type CurrentWindowMode;
 	FIntPoint CurrentScreen;
 	FString CurrentLanguage;
 	TArray <FIntPoint> ArrayScreenSize;
 
-	UGameUserSettings* UserSettings;
 
-	void StartDefaultWindowMode();
-	void StartDefaultLanguage();
-	void StartDefaultScreenSize();
-
-	void RunCurrentWindow();
-	void RunCurrentLanguage();
-	void RunCurrentScreenSize();
 };
