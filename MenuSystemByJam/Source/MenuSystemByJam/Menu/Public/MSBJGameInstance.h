@@ -27,23 +27,47 @@ public:
 
 	virtual void OnStart() override;
 
-	EWindowMode::Type GetCurrentWindowMode() const;
-	void SetCurrentWindowMode(EWindowMode::Type NewType);
+	EWindowMode::Type GetCurrentWindowMode() const { return (this->CurrentWindowMode); }
+	void SetCurrentWindowMode(EWindowMode::Type NewType) { this->CurrentWindowMode = NewType; }
 	
-	FIntPoint GetScreenViewport() const;
-	void SetScreenViewport(FIntPoint NewScreen);
+	FIntPoint GetScreenViewport() const { return (this->CurrentScreen); }
+	void SetScreenViewport(FIntPoint NewScreen) { this->CurrentScreen = NewScreen; }
 
-	FString GetCurrentLanguage() const;
-	void SetCurrentLanguage(FString NewLang);
+	FString GetCurrentLanguage() const { return (this->CurrentLanguage); }
+	void SetCurrentLanguage(FString NewLang) { this->CurrentLanguage = NewLang; }
 
-	UFUNCTION(BlueprintCallable)
-	TArray <FIntPoint> GetArrayScreenSize() const;
+	TArray <FIntPoint> GetArrayWindowedScreenSize() const { return (this->ArrayWindowedScreenSize); }
+	TArray <FIntPoint> GetArrayFullScreenSize() const { return (this->ArrayFullScreenSize); }
 
+	void SetMusicVolumeValue(float NewValue) { this->MusicVolumeValue = NewValue; }
+	float GetMusicVolumeValue() const { return (this->MusicVolumeValue); }
+
+	void SetSoundVolumeValue(float NewValue) { this->SoundVolumeValue = NewValue; }
+	float GetSoundVolumeValue() const { return (this->SoundVolumeValue); }
+
+	void SetMusicVolumeText(FText NewText) { this->MusicVolumeText = NewText; }
+	FText GetMusicVolumeText() const { return (this->MusicVolumeText); }
+	
+	void SetSoundVolumeText(FText NewText) { this->SoundVolumeText = NewText; }
+	FText GetSoundVolumeText() const { return (this->SoundVolumeText); }
+
+protected:
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Volume Editor", meta = (ClampMin = "0.0", ClampMax = "100.0"))
+		float DefaultMusicVolumeValue = 50.f;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Volume Editor", meta = (ClampMin = "0.0", ClampMax = "100.0"))
+		float DefaultSoundVolumeValue = 50.f;
+	
 private:
 	EWindowMode::Type CurrentWindowMode;
 	FIntPoint CurrentScreen;
 	FString CurrentLanguage;
-	TArray <FIntPoint> ArrayScreenSize;
+	TArray <FIntPoint> ArrayWindowedScreenSize;
+	TArray <FIntPoint> ArrayFullScreenSize;
+
+	float MusicVolumeValue;
+	float SoundVolumeValue;
+	FText MusicVolumeText;
+	FText SoundVolumeText;
 
 
 };
