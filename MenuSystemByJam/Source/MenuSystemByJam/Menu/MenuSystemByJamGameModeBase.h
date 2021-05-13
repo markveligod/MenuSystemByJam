@@ -41,7 +41,7 @@ private:
 	UGameUserSettings* UserSettings;
 	
 	//Variables	
-	EMSBJGameMenuState CurrentState = EMSBJGameMenuState::InProgress;
+	EMSBJGameMenuState CurrentState = EMSBJGameMenuState::WaitToStart;
 
 	//Functions
 	void StartPlayGameModeSettings();

@@ -13,7 +13,9 @@
 UENUM(BlueprintType)
 enum class EMSBJGameMenuState : uint8
 {
-    InProgress = 0,
+	WaitToStart = 0,
+	WelcomeToGame,
+    InProgress,
     Options,
     Credits
 };

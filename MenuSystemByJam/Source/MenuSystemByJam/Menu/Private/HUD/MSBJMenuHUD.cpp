@@ -16,13 +16,9 @@ DEFINE_LOG_CATEGORY_STATIC(LogMSBJMenuHUD, All, All);
 void AMSBJMenuHUD::BeginPlay()
 {
 	Super::BeginPlay();
-
-	if (!GetWorld() || !this->MenuHudWidgetClass || !this->OptionsHudWidgetClass || !this->CreditsHudWidgetClass)
-	{
-		UE_LOG(LogMSBJMenuHUD, Error, TEXT("Founded in BeginPlay nullptr!"));
-		return;
-	}
+	check(GetWorld());
 	
+	this->GameWidgets.Add(EMSBJGameMenuState::WelcomeToGame, CreateWidget<UMSBJBaseWidget>(GetWorld(), this->WelcomeHudWidgetClass));
 	this->GameWidgets.Add(EMSBJGameMenuState::InProgress, CreateWidget<UMSBJBaseWidget>(GetWorld(), this->MenuHudWidgetClass));
 	this->GameWidgets.Add(EMSBJGameMenuState::Options, CreateWidget<UMSBJBaseWidget>(GetWorld(), this->OptionsHudWidgetClass));
 	this->GameWidgets.Add(EMSBJGameMenuState::Credits, CreateWidget<UMSBJBaseWidget>(GetWorld(), this->CreditsHudWidgetClass));

@@ -34,7 +34,7 @@ void AMenuSystemByJamGameModeBase::StartPlay()
 	checkf(this->GameInstance, TEXT("Game instance is nullptr"));
 
 	this->StartPlayGameModeSettings();
-	this->SetGameState(this->CurrentState);
+	this->SetGameState(EMSBJGameMenuState::WelcomeToGame);
 }
 
 const EMSBJGameMenuState& AMenuSystemByJamGameModeBase::GetCurrentState() const
@@ -44,6 +44,8 @@ const EMSBJGameMenuState& AMenuSystemByJamGameModeBase::GetCurrentState() const
 
 void AMenuSystemByJamGameModeBase::SetGameState(EMSBJGameMenuState NewState)
 {
+	if (this->CurrentState == NewState)
+		return;
 	this->CurrentState = NewState;
 	this->OnGameMenuStateChangedSignature.Broadcast(NewState);
 }
