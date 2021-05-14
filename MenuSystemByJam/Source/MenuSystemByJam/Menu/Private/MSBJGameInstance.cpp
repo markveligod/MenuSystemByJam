@@ -11,18 +11,16 @@
 
 DEFINE_LOG_CATEGORY_STATIC(LogMSBJGameInstance, All, All);
 
-void UMSBJGameInstance::OnStart()
+UMSBJGameInstance::UMSBJGameInstance()
 {
-	Super::OnStart();
-
 	this->CurrentQualityValue = 4;
-	
+
 	this->SetCurrentWindowMode(EWindowMode::Fullscreen);
 	UE_LOG(LogMSBJGameInstance, Display, TEXT("Default Window Mode: Fullscreen type"))
-	
-	if (!UKismetSystemLibrary::GetConvenientWindowedResolutions(this->ArrayWindowedScreenSize))
-		UE_LOG(LogMSBJGameInstance, Error, TEXT("Array Windowed screen size is null [system error]"));
-	
+
+		if (!UKismetSystemLibrary::GetConvenientWindowedResolutions(this->ArrayWindowedScreenSize))
+			UE_LOG(LogMSBJGameInstance, Error, TEXT("Array Windowed screen size is null [system error]"));
+
 	for (int32 i = 0; i < this->ArrayWindowedScreenSize.Num(); i++)
 		UE_LOG(LogMSBJGameInstance, Display, TEXT("#%d Windowed Screen Size: %d - %d"), i, this->ArrayWindowedScreenSize[i].X, this->ArrayWindowedScreenSize[i].Y);
 
@@ -34,16 +32,16 @@ void UMSBJGameInstance::OnStart()
 
 	this->CurrentArrayScreenSize = this->ArrayFullScreenSize;
 	this->CurrentScreen = this->CurrentArrayScreenSize[this->CurrentArrayScreenSize.Num() - 1];
-	
+
 	this->CurrentLanguage = UKismetSystemLibrary::GetDefaultLanguage();
 	UE_LOG(LogMSBJGameInstance, Display, TEXT("Default Language: %s"), *this->CurrentLanguage);
 
 	this->SetMusicVolumeValue(this->DefaultMusicVolumeValue);
 	UE_LOG(LogMSBJGameInstance, Display, TEXT("Music Value: %f "), this->MusicVolumeValue);
-	
+
 	this->SetSoundVolumeValue(this->DefaultSoundVolumeValue);
 	UE_LOG(LogMSBJGameInstance, Display, TEXT("Sound Value: %f "), this->SoundVolumeValue);
-	
+
 	this->SetMusicVolumeText(FText::FromString(FString::FromInt(int32(this->DefaultMusicVolumeValue))));
 	UE_LOG(LogMSBJGameInstance, Display, TEXT("Music Text: %s "), *this->MusicVolumeText.ToString());
 

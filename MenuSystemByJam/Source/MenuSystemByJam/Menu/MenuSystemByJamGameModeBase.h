@@ -25,6 +25,7 @@ class MENUSYSTEMBYJAM_API AMenuSystemByJamGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
 public:
+	FOnStartPlaySettingsSignature OnStartPlaySettings;
 	FOnGameMenuStateChangedSignature OnGameMenuStateChangedSignature;
 
 	AMenuSystemByJamGameModeBase();
@@ -45,6 +46,7 @@ private:
 
 	//Functions
 	void StartPlayGameModeSettings();
+	
 
 };
 

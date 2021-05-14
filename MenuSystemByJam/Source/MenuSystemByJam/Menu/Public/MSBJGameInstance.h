@@ -20,12 +20,12 @@ class MENUSYSTEMBYJAM_API UMSBJGameInstance : public UGameInstance
 {
 	GENERATED_BODY()
 public:
+	UMSBJGameInstance();
+	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Levels Editor")
 		FName NameStartLevel = NAME_None;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Levels Editor")
 		FName NameMenuLevel = NAME_None;
-
-	virtual void OnStart() override;
 
 	EWindowMode::Type GetCurrentWindowMode() const { return (this->CurrentWindowMode); }
 	void SetCurrentWindowMode(EWindowMode::Type NewType) { this->CurrentWindowMode = NewType; }
@@ -59,6 +59,7 @@ public:
 	int32 GetCurrentQualityValue() const { return (this->CurrentQualityValue); }
 	
 protected:
+	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Volume Editor", meta = (ClampMin = "0.0", ClampMax = "100.0"))
 		float DefaultMusicVolumeValue = 50.f;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Volume Editor", meta = (ClampMin = "0.0", ClampMax = "100.0"))

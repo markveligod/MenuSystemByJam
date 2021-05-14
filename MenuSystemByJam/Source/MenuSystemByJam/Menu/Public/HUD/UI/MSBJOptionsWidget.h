@@ -16,11 +16,10 @@ class USlider;
 class UTextBlock;
 class UButton;
 class UCheckBox;
-class UComboBox;
 class USoundClass;
-class UComboBox;
 class UMSBJGameInstance;
 class UGameUserSettings;
+class AMenuSystemByJamGameModeBase;
 
 /**
  * 
@@ -80,6 +79,8 @@ private:
 	TArray<FText> ArrayQualityText;
 	UMSBJGameInstance* GameInst;
 	UGameUserSettings* UserSettings;
+	AMenuSystemByJamGameModeBase* GameMode;
+	
 	UFUNCTION()
 		void OnChangedMusicSlider(float Value);
 
@@ -111,5 +112,5 @@ private:
 		void OnClickQualityArrowRight();
 
 	void ChangeQualitySettings(int32 Index);
-
+	void SetupStartSettings();
 };

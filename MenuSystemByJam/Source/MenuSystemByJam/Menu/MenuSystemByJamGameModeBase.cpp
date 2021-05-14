@@ -52,11 +52,7 @@ void AMenuSystemByJamGameModeBase::SetGameState(EMSBJGameMenuState NewState)
 
 void AMenuSystemByJamGameModeBase::StartPlayGameModeSettings()
 {
-	if (this->GameInstance->GetCurrentLanguage() == "ru-RU")
-		UKismetInternationalizationLibrary::SetCurrentCulture(FString("ru-RU"), false);
-	else
-		UKismetInternationalizationLibrary::SetCurrentCulture(FString("en"), false);
-
+	this->OnStartPlaySettings.Broadcast();
 	this->UserSettings->SetFullscreenMode(this->GameInstance->GetCurrentWindowMode());
 	this->UserSettings->SetScreenResolution(this->GameInstance->GetScreenViewport());
 	this->UserSettings->SetAntiAliasingQuality(this->GameInstance->GetCurrentQualityValue());

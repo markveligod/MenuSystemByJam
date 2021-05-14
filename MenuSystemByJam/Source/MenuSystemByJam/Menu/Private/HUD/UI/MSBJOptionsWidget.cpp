@@ -25,41 +25,11 @@ void UMSBJOptionsWidget::NativeOnInitialized()
 	
 	this->GameInst = Cast<UMSBJGameInstance>(GetWorld()->GetGameInstance());
 	this->UserSettings = UGameUserSettings::GetGameUserSettings();
+	this->GameMode = GetCurrentGameMode();
 	
 	checkf(this->GameInst, TEXT("Game Instance is nullptr"));
 	checkf(this->UserSettings, TEXT("User settings is nullptr"));
-
-	//FullScreen
-	this->FullScreenCheckBox->SetCheckedState((this->GameInst->GetCurrentWindowMode() == EWindowMode::Type::Fullscreen) ? ECheckBoxState::Checked : ECheckBoxState::Unchecked);
-	
-	// Music and sound part
-	this->MusicSlider->SetMinValue(0.f);
-	this->MusicSlider->SetMaxValue(100.f);
-	this->SoundSlider->SetMinValue(0.f);
-	this->SoundSlider->SetMaxValue(100.f);
-	
-	this->MusicMenuClass->Properties.Volume = float(this->GameInst->GetMusicVolumeValue() / 100.f);
-	this->MusicValueTextBlock->SetText(this->GameInst->GetMusicVolumeText());
-
-	this->SoundMenuClass->Properties.Volume = float(this->GameInst->GetSoundVolumeValue() / 100.f);
-	this->SoundValueTextBlock->SetText(this->GameInst->GetSoundVolumeText());
-
-	this->MusicSlider->SetValue(this->GameInst->GetMusicVolumeValue());
-	this->SoundSlider->SetValue(this->GameInst->GetSoundVolumeValue());
-	
-	
-	//Screen Size
-	const auto TempScreen = this->GameInst->GetScreenViewport();
-	this->ScreenModeTextBlock->SetText(FText::FromString(FString::FromInt(TempScreen.X) + "x" + FString::FromInt(TempScreen.Y)));
-
-	//Quality
-	this->ArrayQualityText.Add(FText::FromString("Low"));
-	this->ArrayQualityText.Add(FText::FromString("Medium"));
-	this->ArrayQualityText.Add(FText::FromString("High"));
-	this->ArrayQualityText.Add(FText::FromString("Epic"));
-	this->ArrayQualityText.Add(FText::FromString("Cinematic"));
-
-	this->QualityModeTextBlock->SetText(this->ArrayQualityText[this->GameInst->GetCurrentQualityValue()]);
+	checkf(this->GameMode, TEXT("Game mode is nullptr"));
 	
 	//delegate join
 	this->MusicSlider->OnValueChanged.AddDynamic(this, &UMSBJOptionsWidget::OnChangedMusicSlider);
@@ -72,6 +42,7 @@ void UMSBJOptionsWidget::NativeOnInitialized()
 	this->ScreenArrowRightButton->OnClicked.AddDynamic(this, &UMSBJOptionsWidget::OnClickScreenArrowRight);
 	this->QualityArrowLeftButton->OnClicked.AddDynamic(this, &UMSBJOptionsWidget::OnClickQualityArrowLeft);
 	this->QualityArrowRightButton->OnClicked.AddDynamic(this, &UMSBJOptionsWidget::OnClickQualityArrowRight);
+	this->GameMode->OnStartPlaySettings.AddUObject(this, &UMSBJOptionsWidget::SetupStartSettings);
 }
 
 void UMSBJOptionsWidget::OnChangedMusicSlider(float Value)
@@ -98,13 +69,7 @@ void UMSBJOptionsWidget::OnChangedSoundSlider(float Value)
 
 void UMSBJOptionsWidget::OnComeBack()
 {
-	const auto GameMode = GetCurrentGameMode();
-	if (!GameMode)
-	{
-		UE_LOG(LogMSBJOptionsWidget, Error, TEXT("Game mode is nullptr"));
-		return;
-	}
-	GameMode->SetGameState(EMSBJGameMenuState::InProgress);
+	this->GameMode->SetGameState(EMSBJGameMenuState::InProgress);
 }
 
 void UMSBJOptionsWidget::OnFullScreenCheck(bool bIsChecked)
@@ -179,4 +144,39 @@ void UMSBJOptionsWidget::ChangeQualitySettings(int32 Index)
 	this->UserSettings->SetVisualEffectQuality(Index);
 	this->UserSettings->ApplySettings(false);
 	this->QualityModeTextBlock->SetText(this->ArrayQualityText[Index]);
+}
+
+void UMSBJOptionsWidget::SetupStartSettings()
+{
+	//FullScreen
+	this->FullScreenCheckBox->SetCheckedState((this->GameInst->GetCurrentWindowMode() == EWindowMode::Type::Fullscreen) ? ECheckBoxState::Checked : ECheckBoxState::Unchecked);
+
+	// Music and sound part
+	this->MusicSlider->SetMinValue(0.f);
+	this->MusicSlider->SetMaxValue(100.f);
+	this->SoundSlider->SetMinValue(0.f);
+	this->SoundSlider->SetMaxValue(100.f);
+
+	this->MusicSlider->SetValue(this->GameInst->GetMusicVolumeValue());
+	this->SoundSlider->SetValue(this->GameInst->GetSoundVolumeValue());
+
+	this->MusicMenuClass->Properties.Volume = float(this->GameInst->GetMusicVolumeValue() / 100.f);
+	this->MusicValueTextBlock->SetText(this->GameInst->GetMusicVolumeText());
+
+	this->SoundMenuClass->Properties.Volume = float(this->GameInst->GetSoundVolumeValue() / 100.f);
+	this->SoundValueTextBlock->SetText(this->GameInst->GetSoundVolumeText());
+
+	//Screen Size
+	const auto TempScreen = this->GameInst->GetScreenViewport();
+	this->ScreenModeTextBlock->SetText(FText::FromString(FString::FromInt(TempScreen.X) + "x" + FString::FromInt(TempScreen.Y)));
+
+	//Quality
+	this->ArrayQualityText.Add(FText::FromString("Low"));
+	this->ArrayQualityText.Add(FText::FromString("Medium"));
+	this->ArrayQualityText.Add(FText::FromString("High"));
+	this->ArrayQualityText.Add(FText::FromString("Epic"));
+	this->ArrayQualityText.Add(FText::FromString("Cinematic"));
+
+	this->QualityModeTextBlock->SetText(this->ArrayQualityText[this->GameInst->GetCurrentQualityValue()]);
+
 }
