@@ -22,6 +22,7 @@ AMenuSystemByJamGameModeBase::AMenuSystemByJamGameModeBase()
 {
 	HUDClass = AMSBJMenuHUD::StaticClass();
 	PlayerControllerClass = AMSBJMenuController::StaticClass();
+	
 }
 
 void AMenuSystemByJamGameModeBase::StartPlay()
@@ -32,7 +33,7 @@ void AMenuSystemByJamGameModeBase::StartPlay()
 	
 	checkf(this->UserSettings, TEXT("User Settings is nullptr"));
 	checkf(this->GameInstance, TEXT("Game instance is nullptr"));
-
+	
 	this->StartPlayGameModeSettings();
 	this->SetGameState(EMSBJGameMenuState::WelcomeToGame);
 }

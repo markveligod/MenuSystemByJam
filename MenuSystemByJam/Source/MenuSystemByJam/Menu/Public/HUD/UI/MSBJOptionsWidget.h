@@ -68,10 +68,7 @@ protected:
 	UPROPERTY(meta = (BindWidget))
 		UTextBlock* QualityModeTextBlock;
 	
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sound classes Editor")
-		USoundClass* MusicMenuClass;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sound classes Editor")
-		USoundClass* SoundMenuClass;
+	
 
 	virtual void NativeOnInitialized() override;
 

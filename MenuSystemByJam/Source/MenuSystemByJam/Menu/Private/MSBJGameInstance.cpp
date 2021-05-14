@@ -11,29 +11,24 @@
 
 DEFINE_LOG_CATEGORY_STATIC(LogMSBJGameInstance, All, All);
 
-UMSBJGameInstance::UMSBJGameInstance()
+void UMSBJGameInstance::OnStart()
 {
+	Super::OnStart();
+	checkf(this->MusicMenuClass, TEXT("Music is null pointer"));
+	checkf(this->SoundMenuClass, TEXT("Sound is null pointer"));
+	
+	
+}
+
+void UMSBJGameInstance::Init()
+{
+	Super::Init();
 	this->CurrentQualityValue = 4;
 
 	this->SetCurrentWindowMode(EWindowMode::Fullscreen);
 	UE_LOG(LogMSBJGameInstance, Display, TEXT("Default Window Mode: Fullscreen type"))
 
-		if (!UKismetSystemLibrary::GetConvenientWindowedResolutions(this->ArrayWindowedScreenSize))
-			UE_LOG(LogMSBJGameInstance, Error, TEXT("Array Windowed screen size is null [system error]"));
-
-	for (int32 i = 0; i < this->ArrayWindowedScreenSize.Num(); i++)
-		UE_LOG(LogMSBJGameInstance, Display, TEXT("#%d Windowed Screen Size: %d - %d"), i, this->ArrayWindowedScreenSize[i].X, this->ArrayWindowedScreenSize[i].Y);
-
-	if (!UKismetSystemLibrary::GetSupportedFullscreenResolutions(this->ArrayFullScreenSize))
-		UE_LOG(LogMSBJGameInstance, Error, TEXT("Array Full screen size is null [system error]"));
-
-	for (int32 i = 0; i < this->ArrayFullScreenSize.Num(); i++)
-		UE_LOG(LogMSBJGameInstance, Display, TEXT("#%d Full Screen Size: %d - %d"), i, this->ArrayFullScreenSize[i].X, this->ArrayFullScreenSize[i].Y);
-
-	this->CurrentArrayScreenSize = this->ArrayFullScreenSize;
-	this->CurrentScreen = this->CurrentArrayScreenSize[this->CurrentArrayScreenSize.Num() - 1];
-
-	this->CurrentLanguage = UKismetSystemLibrary::GetDefaultLanguage();
+		this->CurrentLanguage = UKismetSystemLibrary::GetDefaultLanguage();
 	UE_LOG(LogMSBJGameInstance, Display, TEXT("Default Language: %s"), *this->CurrentLanguage);
 
 	this->SetMusicVolumeValue(this->DefaultMusicVolumeValue);
@@ -47,6 +42,21 @@ UMSBJGameInstance::UMSBJGameInstance()
 
 	this->SetSoundVolumeText(FText::FromString(FString::FromInt(int32(this->DefaultSoundVolumeValue))));
 	UE_LOG(LogMSBJGameInstance, Display, TEXT("Sound Text: %s "), *this->SoundVolumeText.ToString());
+
+	if (!UKismetSystemLibrary::GetConvenientWindowedResolutions(this->ArrayWindowedScreenSize))
+		UE_LOG(LogMSBJGameInstance, Error, TEXT("Array Windowed screen size is null [system error]"));
+
+	for (int32 i = 0; i < this->ArrayWindowedScreenSize.Num(); i++)
+		UE_LOG(LogMSBJGameInstance, Display, TEXT("#%d Windowed Screen Size: %d - %d"), i, this->ArrayWindowedScreenSize[i].X, this->ArrayWindowedScreenSize[i].Y);
+
+	if (!UKismetSystemLibrary::GetSupportedFullscreenResolutions(this->ArrayFullScreenSize))
+		UE_LOG(LogMSBJGameInstance, Error, TEXT("Array Full screen size is null [system error]"));
+
+	for (int32 i = 0; i < this->ArrayFullScreenSize.Num(); i++)
+		UE_LOG(LogMSBJGameInstance, Display, TEXT("#%d Full Screen Size: %d - %d"), i, this->ArrayFullScreenSize[i].X, this->ArrayFullScreenSize[i].Y);
+
+	this->CurrentArrayScreenSize = this->ArrayFullScreenSize;
+	this->CurrentScreen = this->CurrentArrayScreenSize[this->CurrentArrayScreenSize.Num() - 1];
 
 }
 
@@ -83,3 +93,5 @@ int32 UMSBJGameInstance::ChangeQualityToLeftOnRight(bool IsLeft)
 	}
 	return (Result);
 }
+
+

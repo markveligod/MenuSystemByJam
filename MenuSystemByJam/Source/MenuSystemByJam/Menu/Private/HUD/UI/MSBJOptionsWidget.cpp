@@ -47,23 +47,13 @@ void UMSBJOptionsWidget::NativeOnInitialized()
 
 void UMSBJOptionsWidget::OnChangedMusicSlider(float Value)
 {
-	if (!this->MusicMenuClass)
-	{
-		UE_LOG(LogMSBJOptionsWidget, Error, TEXT("MusicClass is nullptr"));
-		return;
-	}
-	this->MusicMenuClass->Properties.Volume = float(Value / 100.f);
+	this->GameInst->MusicMenuClass->Properties.Volume = float(Value / 100.f);
 	this->MusicValueTextBlock->SetText(FText::FromString(FString::FromInt(int32(Value))));
 }
 
 void UMSBJOptionsWidget::OnChangedSoundSlider(float Value)
 {
-	if (!this->SoundMenuClass)
-	{
-		UE_LOG(LogMSBJOptionsWidget, Error, TEXT("SoundClass is nullptr"));
-		return;
-	}
-	this->SoundMenuClass->Properties.Volume = float(Value / 100.f);
+	this->GameInst->SoundMenuClass->Properties.Volume = float(Value / 100.f);
 	this->SoundValueTextBlock->SetText(FText::FromString(FString::FromInt(int32(Value))));
 }
 
@@ -160,10 +150,10 @@ void UMSBJOptionsWidget::SetupStartSettings()
 	this->MusicSlider->SetValue(this->GameInst->GetMusicVolumeValue());
 	this->SoundSlider->SetValue(this->GameInst->GetSoundVolumeValue());
 
-	this->MusicMenuClass->Properties.Volume = float(this->GameInst->GetMusicVolumeValue() / 100.f);
+	this->GameInst->MusicMenuClass->Properties.Volume = float(this->GameInst->GetMusicVolumeValue() / 100.f);
 	this->MusicValueTextBlock->SetText(this->GameInst->GetMusicVolumeText());
 
-	this->SoundMenuClass->Properties.Volume = float(this->GameInst->GetSoundVolumeValue() / 100.f);
+	this->GameInst->SoundMenuClass->Properties.Volume = float(this->GameInst->GetSoundVolumeValue() / 100.f);
 	this->SoundValueTextBlock->SetText(this->GameInst->GetSoundVolumeText());
 
 	//Screen Size
