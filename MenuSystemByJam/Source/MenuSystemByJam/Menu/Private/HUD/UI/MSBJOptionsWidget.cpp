@@ -7,7 +7,6 @@
  */
 
 #include "HUD/UI/MSBJOptionsWidget.h"
-
 #include "MSBJGameInstance.h"
 #include "Components/Button.h"
 #include "Components/CheckBox.h"
@@ -20,33 +19,6 @@
 
 DEFINE_LOG_CATEGORY_STATIC(LogMSBJOptionsWidget, All, All);
 
-void UMSBJOptionsWidget::SetNewScreenSize(FString NewSize)
-{
-	int32 TempX = FCString::Atoi(*NewSize);
-	int32 TempIndex;
-	if (!NewSize.FindChar('x', TempIndex))
-		UE_LOG(LogMSBJOptionsWidget, Error, TEXT("x char is not found"));
-	int32 TempY = FCString::Atoi(&NewSize[TempIndex + 1]);
-	UE_LOG(LogMSBJOptionsWidget, Display, TEXT("X: %d = Y: %d"), TempX, TempY);
-	
-	this->UserSettings->SetScreenResolution(FIntPoint(TempX, TempY));
-	this->UserSettings->ApplySettings(false);
-}
-
-void UMSBJOptionsWidget::SetQualityGame(int32 NumQuality)
-{
-	this->UserSettings->SetTextureQuality(NumQuality);
-	this->UserSettings->SetAntiAliasingQuality(NumQuality);
-	this->UserSettings->SetFoliageQuality(NumQuality);
-	this->UserSettings->SetPostProcessingQuality(NumQuality);
-	this->UserSettings->SetShadingQuality(NumQuality);
-	this->UserSettings->SetShadowQuality(NumQuality);
-	this->UserSettings->SetViewDistanceQuality(NumQuality);
-	this->UserSettings->SetVisualEffectQuality(NumQuality);
-	
-	this->UserSettings->ApplySettings(false);
-}
-
 void UMSBJOptionsWidget::NativeOnInitialized()
 {
 	check(GetWorld());
@@ -57,6 +29,10 @@ void UMSBJOptionsWidget::NativeOnInitialized()
 	checkf(this->GameInst, TEXT("Game Instance is nullptr"));
 	checkf(this->UserSettings, TEXT("User settings is nullptr"));
 
+	//FullScreen
+	this->FullScreenCheckBox->SetCheckedState((this->GameInst->GetCurrentWindowMode() == EWindowMode::Type::Fullscreen) ? ECheckBoxState::Checked : ECheckBoxState::Unchecked);
+	
+	// Music and sound part
 	this->MusicSlider->SetMinValue(0.f);
 	this->MusicSlider->SetMaxValue(100.f);
 	this->SoundSlider->SetMinValue(0.f);
@@ -71,12 +47,31 @@ void UMSBJOptionsWidget::NativeOnInitialized()
 	this->MusicSlider->SetValue(this->GameInst->GetMusicVolumeValue());
 	this->SoundSlider->SetValue(this->GameInst->GetSoundVolumeValue());
 	
+	
+	//Screen Size
+	const auto TempScreen = this->GameInst->GetScreenViewport();
+	this->ScreenModeTextBlock->SetText(FText::FromString(FString::FromInt(TempScreen.X) + "x" + FString::FromInt(TempScreen.Y)));
+
+	//Quality
+	this->ArrayQualityText.Add(FText::FromString("Low"));
+	this->ArrayQualityText.Add(FText::FromString("Medium"));
+	this->ArrayQualityText.Add(FText::FromString("High"));
+	this->ArrayQualityText.Add(FText::FromString("Epic"));
+	this->ArrayQualityText.Add(FText::FromString("Cinematic"));
+
+	this->QualityModeTextBlock->SetText(this->ArrayQualityText[this->GameInst->GetCurrentQualityValue()]);
+	
+	//delegate join
 	this->MusicSlider->OnValueChanged.AddDynamic(this, &UMSBJOptionsWidget::OnChangedMusicSlider);
 	this->SoundSlider->OnValueChanged.AddDynamic(this, &UMSBJOptionsWidget::OnChangedSoundSlider);
 	this->BackButton->OnClicked.AddDynamic(this, &UMSBJOptionsWidget::OnComeBack);
 	this->FullScreenCheckBox->OnCheckStateChanged.AddDynamic(this, &UMSBJOptionsWidget::OnFullScreenCheck);
 	this->LangEnButton->OnClicked.AddDynamic(this, &UMSBJOptionsWidget::OnEnLangChanged);
 	this->LangRuButton->OnClicked.AddDynamic(this, &UMSBJOptionsWidget::OnRuLangChanged);
+	this->ScreenArrowLeftButton->OnClicked.AddDynamic(this, &UMSBJOptionsWidget::OnClickScreenArrowLeft);
+	this->ScreenArrowRightButton->OnClicked.AddDynamic(this, &UMSBJOptionsWidget::OnClickScreenArrowRight);
+	this->QualityArrowLeftButton->OnClicked.AddDynamic(this, &UMSBJOptionsWidget::OnClickQualityArrowLeft);
+	this->QualityArrowRightButton->OnClicked.AddDynamic(this, &UMSBJOptionsWidget::OnClickQualityArrowRight);
 }
 
 void UMSBJOptionsWidget::OnChangedMusicSlider(float Value)
@@ -115,7 +110,20 @@ void UMSBJOptionsWidget::OnComeBack()
 void UMSBJOptionsWidget::OnFullScreenCheck(bool bIsChecked)
 {
 	UE_LOG(LogMSBJOptionsWidget, Display, TEXT("Full Screen: %d"), bIsChecked);
-	this->UserSettings->SetFullscreenMode(bIsChecked == true ? EWindowMode::Fullscreen : EWindowMode::Windowed);
+	if (bIsChecked == true)
+	{
+		this->UserSettings->SetFullscreenMode(EWindowMode::Fullscreen);
+		this->GameInst->ChangeArrayScreenSize(true);
+
+	}
+	else
+	{
+		this->UserSettings->SetFullscreenMode(EWindowMode::Windowed);
+		this->GameInst->ChangeArrayScreenSize(false);
+	}
+	const auto ResScreen = this->GameInst->GetScreenViewport();
+	this->UserSettings->SetScreenResolution(ResScreen);
+	this->ScreenModeTextBlock->SetText(FText::FromString(FString::FromInt(ResScreen.X) + "x" + FString::FromInt(ResScreen.Y)));
 	this->UserSettings->ApplySettings(false);
 }
 
@@ -127,4 +135,48 @@ void UMSBJOptionsWidget::OnRuLangChanged()
 void UMSBJOptionsWidget::OnEnLangChanged()
 {
 	UKismetInternationalizationLibrary::SetCurrentCulture(FString("en"), false);
+}
+
+void UMSBJOptionsWidget::OnClickScreenArrowLeft()
+{
+	const auto ResScreen = this->GameInst->FindScreenSizeToLeftOnRight(true);
+	this->UserSettings->SetScreenResolution(ResScreen);
+	this->ScreenModeTextBlock->SetText(FText::FromString(FString::FromInt(ResScreen.X) + "x" + FString::FromInt(ResScreen.Y)));
+	this->UserSettings->ApplySettings(false);
+
+}
+
+void UMSBJOptionsWidget::OnClickScreenArrowRight()
+{
+	const auto ResScreen = this->GameInst->FindScreenSizeToLeftOnRight(false);
+	this->UserSettings->SetScreenResolution(ResScreen);
+	this->ScreenModeTextBlock->SetText(FText::FromString(FString::FromInt(ResScreen.X) + "x" + FString::FromInt(ResScreen.Y)));
+	this->UserSettings->ApplySettings(false);
+}
+
+void UMSBJOptionsWidget::OnClickQualityArrowLeft()
+{
+	const auto TempIndexQuality = this->GameInst->ChangeQualityToLeftOnRight(true);
+	this->ChangeQualitySettings(TempIndexQuality);
+}
+
+void UMSBJOptionsWidget::OnClickQualityArrowRight()
+{
+	const auto TempIndexQuality = this->GameInst->ChangeQualityToLeftOnRight(false);
+	this->ChangeQualitySettings(TempIndexQuality);
+}
+
+void UMSBJOptionsWidget::ChangeQualitySettings(int32 Index)
+{
+	this->UserSettings->SetAntiAliasingQuality(Index);
+	this->UserSettings->SetAudioQualityLevel(Index);
+	this->UserSettings->SetFoliageQuality(Index);
+	this->UserSettings->SetPostProcessingQuality(Index);
+	this->UserSettings->SetShadingQuality(Index);
+	this->UserSettings->SetShadowQuality(Index);
+	this->UserSettings->SetTextureQuality(Index);
+	this->UserSettings->SetViewDistanceQuality(Index);
+	this->UserSettings->SetVisualEffectQuality(Index);
+	this->UserSettings->ApplySettings(false);
+	this->QualityModeTextBlock->SetText(this->ArrayQualityText[Index]);
 }

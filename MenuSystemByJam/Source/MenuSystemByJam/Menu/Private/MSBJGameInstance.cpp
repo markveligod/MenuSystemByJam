@@ -15,6 +15,8 @@ void UMSBJGameInstance::OnStart()
 {
 	Super::OnStart();
 
+	this->CurrentQualityValue = 4;
+	
 	this->SetCurrentWindowMode(EWindowMode::Fullscreen);
 	UE_LOG(LogMSBJGameInstance, Display, TEXT("Default Window Mode: Fullscreen type"))
 	
@@ -30,7 +32,8 @@ void UMSBJGameInstance::OnStart()
 	for (int32 i = 0; i < this->ArrayFullScreenSize.Num(); i++)
 		UE_LOG(LogMSBJGameInstance, Display, TEXT("#%d Full Screen Size: %d - %d"), i, this->ArrayFullScreenSize[i].X, this->ArrayFullScreenSize[i].Y);
 
-	this->CurrentScreen = this->ArrayFullScreenSize[this->ArrayFullScreenSize.Num() - 1];
+	this->CurrentArrayScreenSize = this->ArrayFullScreenSize;
+	this->CurrentScreen = this->CurrentArrayScreenSize[this->CurrentArrayScreenSize.Num() - 1];
 	
 	this->CurrentLanguage = UKismetSystemLibrary::GetDefaultLanguage();
 	UE_LOG(LogMSBJGameInstance, Display, TEXT("Default Language: %s"), *this->CurrentLanguage);
@@ -47,4 +50,38 @@ void UMSBJGameInstance::OnStart()
 	this->SetSoundVolumeText(FText::FromString(FString::FromInt(int32(this->DefaultSoundVolumeValue))));
 	UE_LOG(LogMSBJGameInstance, Display, TEXT("Sound Text: %s "), *this->SoundVolumeText.ToString());
 
+}
+
+FIntPoint UMSBJGameInstance::FindScreenSizeToLeftOnRight(bool IsLeft)
+{
+	int32 TempIndex;
+	FIntPoint ReturnRes;
+	if (this->CurrentArrayScreenSize.Find(this->CurrentScreen, TempIndex))
+	{
+		if (IsLeft)
+		{
+			ReturnRes = (TempIndex == 0) ? this->CurrentArrayScreenSize[this->CurrentArrayScreenSize.Num() - 1] : this->CurrentArrayScreenSize[TempIndex - 1];
+			this->CurrentScreen = ReturnRes;
+		}
+		else
+		{
+			ReturnRes = (TempIndex == (this->CurrentArrayScreenSize.Num() - 1)) ? this->CurrentArrayScreenSize[0] : this->CurrentArrayScreenSize[TempIndex + 1];
+			this->CurrentScreen = ReturnRes;
+		}
+	}
+	return (ReturnRes);
+}
+
+int32 UMSBJGameInstance::ChangeQualityToLeftOnRight(bool IsLeft)
+{
+	int32 Result;
+	if (IsLeft)
+	{
+		Result = (this->CurrentQualityValue == 0) ? this->CurrentQualityValue = 4 : --this->CurrentQualityValue;
+	}
+	else
+	{
+		Result = (this->CurrentQualityValue == 4) ? this->CurrentQualityValue = 0 : ++this->CurrentQualityValue;
+	}
+	return (Result);
 }

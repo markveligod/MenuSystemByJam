@@ -56,7 +56,17 @@ void AMenuSystemByJamGameModeBase::StartPlayGameModeSettings()
 		UKismetInternationalizationLibrary::SetCurrentCulture(FString("ru-RU"), false);
 	else
 		UKismetInternationalizationLibrary::SetCurrentCulture(FString("en"), false);
+
 	this->UserSettings->SetFullscreenMode(this->GameInstance->GetCurrentWindowMode());
 	this->UserSettings->SetScreenResolution(this->GameInstance->GetScreenViewport());
+	this->UserSettings->SetAntiAliasingQuality(this->GameInstance->GetCurrentQualityValue());
+	this->UserSettings->SetAudioQualityLevel(this->GameInstance->GetCurrentQualityValue());
+	this->UserSettings->SetFoliageQuality(this->GameInstance->GetCurrentQualityValue());
+	this->UserSettings->SetPostProcessingQuality(this->GameInstance->GetCurrentQualityValue());
+	this->UserSettings->SetShadingQuality(this->GameInstance->GetCurrentQualityValue());
+	this->UserSettings->SetShadowQuality(this->GameInstance->GetCurrentQualityValue());
+	this->UserSettings->SetTextureQuality(this->GameInstance->GetCurrentQualityValue());
+	this->UserSettings->SetViewDistanceQuality(this->GameInstance->GetCurrentQualityValue());
+	this->UserSettings->SetVisualEffectQuality(this->GameInstance->GetCurrentQualityValue());
 	this->UserSettings->ApplySettings(false);
 }

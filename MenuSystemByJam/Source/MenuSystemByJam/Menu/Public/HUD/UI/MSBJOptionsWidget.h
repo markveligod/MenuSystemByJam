@@ -31,11 +31,6 @@ class MENUSYSTEMBYJAM_API UMSBJOptionsWidget : public UMSBJBaseWidget
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintCallable)
-		void SetNewScreenSize(FString NewSize);
-	
-	UFUNCTION(BlueprintCallable)
-		void SetQualityGame(int32 NumQuality);
 
 
 protected:
@@ -58,6 +53,21 @@ protected:
 
 	UPROPERTY(meta = (BindWidget))
 		UCheckBox* FullScreenCheckBox;
+
+	UPROPERTY(meta = (BindWidget))
+	UTextBlock* ScreenModeTextBlock;
+
+	UPROPERTY(meta = (BindWidget))
+		UButton* ScreenArrowRightButton;
+	UPROPERTY(meta = (BindWidget))
+		UButton* ScreenArrowLeftButton;
+
+	UPROPERTY(meta = (BindWidget))
+		UButton* QualityArrowLeftButton;
+	UPROPERTY(meta = (BindWidget))
+		UButton* QualityArrowRightButton;
+	UPROPERTY(meta = (BindWidget))
+		UTextBlock* QualityModeTextBlock;
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sound classes Editor")
 		USoundClass* MusicMenuClass;
@@ -67,6 +77,7 @@ protected:
 	virtual void NativeOnInitialized() override;
 
 private:
+	TArray<FText> ArrayQualityText;
 	UMSBJGameInstance* GameInst;
 	UGameUserSettings* UserSettings;
 	UFUNCTION()
@@ -86,5 +97,19 @@ private:
 
 	UFUNCTION()
 		void OnEnLangChanged();
+
+	UFUNCTION()
+		void OnClickScreenArrowLeft();
+	
+	UFUNCTION()
+		void OnClickScreenArrowRight();
+
+	UFUNCTION()
+		void OnClickQualityArrowLeft();
+
+	UFUNCTION()
+		void OnClickQualityArrowRight();
+
+	void ChangeQualitySettings(int32 Index);
 
 };
