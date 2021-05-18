@@ -54,6 +54,7 @@ void AMenuSystemByJamGameModeBase::SetGameState(EMSBJGameMenuState NewState)
 void AMenuSystemByJamGameModeBase::StartPlayGameModeSettings()
 {
 	this->OnStartPlaySettings.Broadcast();
+	UKismetInternationalizationLibrary::SetCurrentCulture(this->GameInstance->GetCurrentLanguage(), false);
 	this->UserSettings->SetFullscreenMode(this->GameInstance->GetCurrentWindowMode());
 	this->UserSettings->SetScreenResolution(this->GameInstance->GetScreenViewport());
 	this->UserSettings->SetAntiAliasingQuality(this->GameInstance->GetCurrentQualityValue());
