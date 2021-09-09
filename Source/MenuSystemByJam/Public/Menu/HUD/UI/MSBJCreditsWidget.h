@@ -9,24 +9,24 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "HUD/UI/MSBJBaseWidget.h"
+#include "Menu/HUD/UI/MSBJBaseWidget.h"
 #include "MSBJCreditsWidget.generated.h"
 
 class UButton;
 /**
- * 
+ *
  */
 UCLASS()
 class MENUSYSTEMBYJAM_API UMSBJCreditsWidget : public UMSBJBaseWidget
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 protected:
-	UPROPERTY(meta = (BindWidget))
-		UButton* BackButton;
+    UPROPERTY(meta = (BindWidget))
+    UButton* BackButton;
 
-	virtual void NativeOnInitialized() override;
+    virtual void NativeOnInitialized() override;
 
 private:
-	UFUNCTION()
-		void OnComeBack();
+    UFUNCTION()
+    void OnComeBack();
 };

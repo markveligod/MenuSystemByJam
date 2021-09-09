@@ -6,15 +6,15 @@
  * Contact: markveligod@yandex.ru
  */
 
-#include "HUD/UI/MSBJBaseWidget.h"
+#include "Menu/HUD/UI/MSBJBaseWidget.h"
 #include "Menu/MenuSystemByJamGameModeBase.h"
 
 void UMSBJBaseWidget::Show()
 {
-	PlayAnimation(this->ShowAnimation);
+    PlayAnimation(this->ShowAnimation);
 }
 
 AMenuSystemByJamGameModeBase* UMSBJBaseWidget::GetCurrentGameMode() const
 {
-	return (GetWorld() ? Cast<AMenuSystemByJamGameModeBase>(GetWorld()->GetAuthGameMode()) : nullptr);
+    return (GetWorld() ? Cast<AMenuSystemByJamGameModeBase>(GetWorld()->GetAuthGameMode()) : nullptr);
 }

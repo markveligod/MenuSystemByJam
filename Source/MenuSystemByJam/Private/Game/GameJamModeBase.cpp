@@ -1,14 +1,14 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Game/Public/GameJamModeBase.h"
-#include "Menu/Public/MSBJGameInstance.h"
+#include "Game/GameJamModeBase.h"
+#include "Menu/MSBJGameInstance.h"
 #include "GameFramework/GameUserSettings.h"
 #include "Kismet/KismetInternationalizationLibrary.h"
 
 AGameJamModeBase::AGameJamModeBase()
 {
-	
+
 }
 
 void AGameJamModeBase::StartPlay()
@@ -19,7 +19,7 @@ void AGameJamModeBase::StartPlay()
 	checkf(this->GameInst, TEXT("Game instance is nullptr"));
 	this->UserSettings = UGameUserSettings::GetGameUserSettings();
 	checkf(this->UserSettings, TEXT("User settings is nullptr"));
-	
+
 	this->SetupStartLevelSettings();
 	this->ChangeGameState(EGameLevelState::GameOver);
 }
@@ -27,7 +27,7 @@ void AGameJamModeBase::StartPlay()
 void AGameJamModeBase::ChangeGameState(EGameLevelState NewState)
 {
 	if (this->CurrentGameState == NewState)
-		return ;
+		return;
 	this->CurrentGameState = NewState;
 	this->OnGameLevelStateChanged.Broadcast(NewState);
 }

@@ -1,8 +1,16 @@
-/MenuSystemByJam/.vs
-/MenuSystemByJam/*.sln
-/MenuSystemByJam/DerivedDataCache/
-/MenuSystemByJam/Intermediate/
-/MenuSystemByJam/Saved/
-/MenuSystemByJam/Binaries/
-/MenuSystemByJam/Build/
-/MenuSystemByJam/Content/Levels/*.uasset
+# IDE files
+/.vs
+/.idea
+/*.sln
+
+#Trash
+/DerivedDataCache/*
+/Intermediate/*
+/Saved/*
+/Binaries/*
+
+Plugins/*/Binaries/*
+Plugins/*/Intermediate/*
+
+# Built data for maps
+*_BuiltData.uasset

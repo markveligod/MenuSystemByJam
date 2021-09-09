@@ -6,11 +6,11 @@
  * Contact: markveligod@yandex.ru
  */
 
-#include "HUD/MSBJMenuController.h"
+#include "Menu/HUD/MSBJMenuController.h"
 
 void AMSBJMenuController::BeginPlay()
 {
-	Super::BeginPlay();
-	SetInputMode(FInputModeUIOnly());
-	bShowMouseCursor = true;
+    Super::BeginPlay();
+    SetInputMode(FInputModeUIOnly());
+    bShowMouseCursor = true;
 }
