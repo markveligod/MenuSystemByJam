@@ -1,14 +1,14 @@
-# Menu System By Jam (Technical documentation)
+# :taurus: Menu System By Jam (Technical documentation)
 
-## How to use this nonsense ?
+## :wastebasket: How to use this nonsense ?
 1. Download renom.exe from https://github.com/UnrealisticDev/Renom  
 2. Run renom.exe  
 3. Insert the path to the project  
 4. Enter a new project name
 5. Done!  
 
-## Description
-### Game Mode and Game instance
+## :clipboard: Description
+### :video_game: Game Mode and Game instance
 Path Game mode: Source/MenuSystemByJam/public(private)/Menu/MenuSystemByJamGameModeBase.h(.cpp)  
 Path Game instance: Source/MenuSystemByJam/public(private)/Menu/MSBJGameInstance.h(.cpp)  
 The main task of the `AMenuSystemByJamGameModeBase` class is to switch states and notify with the help of a delegate `FOnGameMenuStateChangedSignature` about a change in the menu state.
@@ -65,7 +65,7 @@ void AMenuSystemByJamGameModeBase::StartPlayGameModeSettings()
 }
 ```
 
-### HUD and UI
+### :calling: HUD and UI
 Path HUD: Source/MenuSystemByJam/public(private)/Menu/HUD/MSBJMenuHUD.h(.cpp)
 Path UI: Source/MenuSystemByJam/public(private)/Menu/HUD/UI/*
 
