@@ -105,6 +105,4 @@ private:
 	float SoundVolumeValue;
 	FText MusicVolumeText;
 	FText SoundVolumeText;
-
-
 };
