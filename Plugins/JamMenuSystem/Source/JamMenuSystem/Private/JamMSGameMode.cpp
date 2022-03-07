@@ -1,18 +1,22 @@
 /**
   * Maintain: Mark Veligod
   * GitHub: https://github.com/markveligod
-  * Itch: https://veligodstudio.itch.io/
+  * Itch: https://markveligod.itch.io/
  **/
 
 #include "JamMSGameMode.h"
-
 #include "JamMSGameInstance.h"
+#include "MenuPlayerController.h"
 #include "GameFramework/GameUserSettings.h"
+#include "HUD/AMenuHUD.h"
+#include "Library/JamMSFunctionLibrary.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogJamMSGameMode, All, All);
 
 AJamMSGameMode::AJamMSGameMode()
 {
+    HUDClass = AMenuHUD::StaticClass();
+    PlayerControllerClass = AMenuPlayerController::StaticClass();
 }
 
 void AJamMSGameMode::ChangeMenuState(EJamMSMenuState NewState)
@@ -32,11 +36,13 @@ void AJamMSGameMode::BeginPlay()
 {
     Super::BeginPlay();
 
-    this->GameInstance = Cast<UJamMSGameInstance>(GetWorld()->GetAuthGameMode());
-    checkf(this->GameInstance, TEXT("Game instance is nullptr"));
-
+    this->GameInst = UJamMSGameInstance::Get(GetWorld());
+    if (!CHECK(this->GameInst != nullptr, "Game instance is nullptr")) return;
+    
     this->UserSettings = UGameUserSettings::GetGameUserSettings();
-    checkf(this->UserSettings, TEXT("User settings is nullptr"));
+    if (!CHECK(this->UserSettings != nullptr, "User settings is nullptr")) return;
+
+    
 }
 
 

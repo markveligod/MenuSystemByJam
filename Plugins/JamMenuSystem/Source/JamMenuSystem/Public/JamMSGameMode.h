@@ -1,7 +1,7 @@
 /**
   * Maintain: Mark Veligod
   * GitHub: https://github.com/markveligod
-  * Itch: https://veligodstudio.itch.io/
+  * Itch: https://markveligod.itch.io/
  **/
 
 #pragma once
@@ -27,7 +27,12 @@ public:
     // Construct default
     AJamMSGameMode();
     
+    // Singleton
+    UFUNCTION(BlueprintCallable, Category = "AJamMSGameMode|Singleton")
+    static AJamMSGameMode* Get(UWorld* World) { return (World) ? Cast<AJamMSGameMode>(World->GetAuthGameMode()) : nullptr; }
+    
     // Signature on change Menu State
+    UPROPERTY(BlueprintAssignable)
     FOnMenuStateChangedSignature OnMenuStateChanged;
 
     /**
@@ -45,7 +50,7 @@ protected:
 private:
     // Current pointer on UJamMSGameInstance class
     UPROPERTY()
-    UJamMSGameInstance* GameInstance;
+    UJamMSGameInstance* GameInst;
     
     // Current pointer on UGameUserSettings class
     UPROPERTY()

@@ -1,7 +1,7 @@
 ﻿/**
   * Maintain: Mark Veligod
   * GitHub: https://github.com/markveligod
-  * Itch: https://veligodstudio.itch.io/
+  * Itch: https://markveligod.itch.io/
  **/
 
 #pragma once
@@ -20,4 +20,4 @@ enum class EJamMSMenuState : uint8
 };
 
 /* Delegate for change the menu state */
-DECLARE_MULTICAST_DELEGATE_OneParam(FOnMenuStateChangedSignature, EJamMSMenuState);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnMenuStateChangedSignature, EJamMSMenuState, MenuState);

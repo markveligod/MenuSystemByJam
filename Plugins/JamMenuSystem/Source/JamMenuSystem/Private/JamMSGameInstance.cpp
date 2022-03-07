@@ -1,7 +1,7 @@
 /**
   * Maintain: Mark Veligod
   * GitHub: https://github.com/markveligod
-  * Itch: https://veligodstudio.itch.io/
+  * Itch: https://markveligod.itch.io/
  **/
 
 #include "JamMSGameInstance.h"

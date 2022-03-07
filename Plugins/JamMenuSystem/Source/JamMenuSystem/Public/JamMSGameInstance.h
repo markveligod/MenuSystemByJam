@@ -1,7 +1,7 @@
 /**
   * Maintain: Mark Veligod
   * GitHub: https://github.com/markveligod
-  * Itch: https://veligodstudio.itch.io/
+  * Itch: https://markveligod.itch.io/
  **/
 
 #pragma once
@@ -19,9 +19,13 @@ class JAMMENUSYSTEM_API UJamMSGameInstance : public UGameInstance
 	GENERATED_BODY()
 
 public:
+
+    // Singleton
+    UFUNCTION(BlueprintCallable, Category = "UJamMSGameInstance|Singleton")
+    static UJamMSGameInstance* Get(UWorld* World) { return (World) ? Cast<UJamMSGameInstance>(World->GetGameInstance()) : nullptr; }
     
 #pragma region GetData
-
+    
     /**
      * @public Getting name menu level
      * @return FName
