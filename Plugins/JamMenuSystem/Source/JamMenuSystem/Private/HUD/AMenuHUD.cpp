@@ -72,12 +72,14 @@ void AMenuHUD::SetupNewWidget(UMenuUserWidgetBase* Widget)
     }
     
     this->MenuWidget = Widget;
+    this->MenuWidget->SetupStateWidget(EStateObject::Active);
     this->MenuWidget->SetVisibility(ESlateVisibility::Visible);
     this->MenuWidget->ShowAnim(this->MenuWidget->GetStartAnim());
 }
 
 void AMenuHUD::SwitchWidget(UMenuUserWidgetBase* OldWidget, UMenuUserWidgetBase* NewWidget)
 {
+    OldWidget->SetupStateWidget(EStateObject::Inactive);
     OldWidget->SetVisibility(ESlateVisibility::Hidden);
     this->MenuWidget = nullptr;
     this->SetupNewWidget(NewWidget);

@@ -11,8 +11,6 @@
 #include "HUD/AMenuHUD.h"
 #include "Library/JamMSFunctionLibrary.h"
 
-DEFINE_LOG_CATEGORY_STATIC(LogJamMSGameMode, All, All);
-
 AJamMSGameMode::AJamMSGameMode()
 {
     HUDClass = AMenuHUD::StaticClass();
@@ -23,13 +21,28 @@ void AJamMSGameMode::ChangeMenuState(EJamMSMenuState NewState)
 {
     if (this->MenuState == NewState)
     {
-        UE_LOG(LogJamMSGameMode, Warning, TEXT("Current menu state equal new state: %s"),
-            *UEnum::GetValueAsString(NewState));
+        LOGJAM(ELogVerb::Warning, FString::Printf(TEXT("Current menu state equal new state: %s"),
+            *UEnum::GetValueAsString(NewState)));
         return;
     }
 
+    LOGJAM(ELogVerb::Display, FString::Printf(TEXT("New menu state: %s"), *UEnum::GetValueAsString(NewState)));
     this->MenuState = NewState;
     this->OnMenuStateChanged.Broadcast(NewState);
+}
+
+void AJamMSGameMode::ChangeMenuStateTimer(EJamMSMenuState NewState, float RateTime)
+{
+    if (RateTime <= 0.0f)
+    {
+        LOGJAM(ELogVerb::Warning, FString::Printf(TEXT("Call function with rate timer: %f <= 0.0"), RateTime));
+        return;
+    }
+    
+    FTimerHandle TimerHandle;
+    FTimerDelegate TimerDelegate;
+    TimerDelegate.BindUObject(this, &AJamMSGameMode::ChangeMenuState, NewState);
+    GetWorldTimerManager().SetTimer(TimerHandle, TimerDelegate, RateTime, false);
 }
 
 void AJamMSGameMode::BeginPlay()
@@ -42,7 +55,7 @@ void AJamMSGameMode::BeginPlay()
     this->UserSettings = UGameUserSettings::GetGameUserSettings();
     if (!CHECK(this->UserSettings != nullptr, "User settings is nullptr")) return;
 
-    
+    ChangeMenuState(EJamMSMenuState::WelcomeToGame);
 }
 
 

@@ -41,6 +41,14 @@ public:
      **/
     UFUNCTION(BlueprintCallable, Category = "AJamMSGameMode|Action")
     void ChangeMenuState(EJamMSMenuState NewState);
+
+    /**
+     * @public Change current menu state on new state for Timer
+     * @param1 EJamMSMenuState
+     * @param2 float
+     **/
+    UFUNCTION(BlueprintCallable, Category = "AJamMSGameMode|Action")
+    void ChangeMenuStateTimer(EJamMSMenuState NewState, float RateTime);
     
 protected:
     

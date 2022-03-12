@@ -24,7 +24,7 @@ DEFINE_LOG_CATEGORY_STATIC(LogJamMenuSystem, All, All);
 #define LOGJAM(verb, str) UJamMSFunctionLibrary::Print_Log(verb, str, __LINE__, __FUNCTION__)
 
 /**
- * 
+ * @class Functional library for project support
  */
 UCLASS()
 class JAMMENUSYSTEM_API UJamMSFunctionLibrary : public UBlueprintFunctionLibrary

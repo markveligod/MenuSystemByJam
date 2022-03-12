@@ -6,12 +6,16 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "JamMSDataTypes.h"
 #include "Blueprint/UserWidget.h"
+#include "Library/JamMSFunctionLibrary.h"
 #include "MenuUserWidgetBase.generated.h"
 
 // Forward declare
 class UJamMSGameInstance;
 class AJamMSGameMode;
+
+#define LOGMENU(verb, str) Print_Menu(verb, str, __LINE__, __FUNCTION__)
 
 /**
  * @class Parent class for all widget menu system
@@ -19,9 +23,15 @@ class AJamMSGameMode;
 UCLASS()
 class JAMMENUSYSTEM_API UMenuUserWidgetBase : public UUserWidget
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 
 public:
+
+    // Log print from menu
+    void Print_Menu(ELogVerb TypeVerb, FString Str, int Line, const char* Function) const;
+    
+#pragma region Action
+
     /**
      * @public Show animation
      * @param1 UWidgetAnimation
@@ -36,8 +46,17 @@ public:
      **/
     UFUNCTION(BlueprintCallable, Category = "UMenuUserWidgetBase|Action")
     void ShowAnimTimer(UWidgetAnimation* Anim, float RateTime);
-    
-    
+
+    /**
+     * @public Setup new state widget (Intended for override)
+     * @param1 EStateObject
+     **/
+    virtual void SetupStateWidget(const EStateObject NewState);
+
+#pragma endregion
+
+#pragma region GetData
+
     /**
      * @public Getting Start animation
      * @return UWidgetAnimation
@@ -66,12 +85,43 @@ public:
     UFUNCTION(BlueprintPure, Category = "UMenuUserWidgetBase|GetData")
     FORCEINLINE UJamMSGameInstance* GetGameInst() const { return this->GameInst; }
 
+    /**
+     * @public Getting current state widget
+     * @return EStateObject
+     **/
+    UFUNCTION(BlueprintPure, Category = "UMenuUserWidgetBase|GetData")
+    FORCEINLINE EStateObject GetStateWidget() const { return this->StateWidget; }
+
+    /**
+     * @public Getting current state button
+     * @return EStateObject
+     **/
+    UFUNCTION(BlueprintPure, Category = "UMenuUserWidgetBase|GetData")
+    FORCEINLINE EStateObject GetStateButton() const { return this->StateButton; }
+
+#pragma endregion
+
 protected:
     // Native handling for SObjectWidget
     virtual void NativeOnInitialized() override;
-    
-private:
 
+    /**
+     * @public Show animation for timer
+     * @param1 UWidgetAnimation
+     * @param2 float
+     **/
+    UFUNCTION(BlueprintCallable, Category = "UMenuUserWidgetBase|Action")
+    void SetupStateButton(EStateObject NewState);
+
+    /**
+     * @public Show animation for timer
+     * @param1 UWidgetAnimation
+     * @param2 float
+     **/
+    UFUNCTION(BlueprintCallable, Category = "UMenuUserWidgetBase|Action")
+    void SetupStateButtonTimer(EStateObject NewState, float RateTime);
+
+private:
     // @private Current pointer on AJamMSGameMode class
     UPROPERTY()
     AJamMSGameMode* GameMode;
@@ -80,6 +130,12 @@ private:
     UPROPERTY()
     UJamMSGameInstance* GameInst;
     
+    // @protected State widget
+    EStateObject StateWidget = EStateObject::Inactive;
+
+    // @protected State Button
+    EStateObject StateButton = EStateObject::Inactive;
+
     // @private Animation at the start of visibility
     UPROPERTY(Transient, meta = (BindWidgetAnim))
     UWidgetAnimation* StartAnim;
@@ -88,6 +144,9 @@ private:
     UPROPERTY(Transient, meta = (BindWidgetAnim))
     UWidgetAnimation* EndAnim;
 
-    // Timer Handle for show animation
+    // @private Timer Handle for show animation
     FTimerHandle TimerHandleShowAnim;
+
+    // @private Timer Handle for show animation
+    FTimerHandle TimerHandleButton;
 };
