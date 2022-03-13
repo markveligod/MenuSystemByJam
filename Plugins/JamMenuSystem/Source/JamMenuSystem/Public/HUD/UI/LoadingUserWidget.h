@@ -3,21 +3,17 @@
   * GitHub: https://github.com/markveligod
   * Itch: https://markveligod.itch.io/
  **/
-
 #pragma once
 
 #include "CoreMinimal.h"
 #include "HUD/UI/MenuUserWidgetBase.h"
-#include "WelcomeUserWidget.generated.h"
-
-// Forward declare
-class UImage;
+#include "LoadingUserWidget.generated.h"
 
 /**
- * @class The usual widget for introductory pictures
+ * @class Plug for loading the level
  */
 UCLASS()
-class JAMMENUSYSTEM_API UWelcomeUserWidget : public UMenuUserWidgetBase
+class JAMMENUSYSTEM_API ULoadingUserWidget : public UMenuUserWidgetBase
 {
 	GENERATED_BODY()
 
@@ -27,13 +23,9 @@ public:
      * @param1 EStateObject
      **/
     virtual void SetupStateWidget(const EStateObject NewState) override;
-    
+
 protected:
     // Native handling for SObjectWidget
     virtual void NativeOnInitialized() override;
-
-private:
-    // A picture that will act as a greeting
-    UPROPERTY(Transient, meta = (BindWidget))
-    UImage* WelcomeImage;
+    
 };

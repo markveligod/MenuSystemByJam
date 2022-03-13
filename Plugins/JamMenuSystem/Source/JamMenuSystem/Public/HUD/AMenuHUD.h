@@ -57,6 +57,10 @@ private:
     UPROPERTY(EditDefaultsOnly, Category = "UI")
     TSubclassOf<UMenuUserWidgetBase> CreditsHudWidgetClass;
 
+    // @private Current sub class on UMenuUserWidgetBase from CreditsHudWidgetClass
+    UPROPERTY(EditDefaultsOnly, Category = "UI")
+    TSubclassOf<UMenuUserWidgetBase> LoadingHudWidgetClass;
+
     // @private Container for storing widgets
     UPROPERTY()
     TMap<EJamMSMenuState, UMenuUserWidgetBase*> MenuWidgets;

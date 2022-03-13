@@ -16,7 +16,8 @@ enum class EJamMSMenuState : uint8
     WelcomeToGame,
     InProgress,
     Options,
-    Credits
+    Credits,
+    Loading
 };
 
 /* Delegate for change the menu state */

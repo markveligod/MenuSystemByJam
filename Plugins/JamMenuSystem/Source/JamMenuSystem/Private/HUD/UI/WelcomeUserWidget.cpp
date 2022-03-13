@@ -5,7 +5,6 @@
  **/
 
 #include "HUD/UI/WelcomeUserWidget.h"
-
 #include "JamMSGameMode.h"
 
 void UWelcomeUserWidget::SetupStateWidget(const EStateObject NewState)

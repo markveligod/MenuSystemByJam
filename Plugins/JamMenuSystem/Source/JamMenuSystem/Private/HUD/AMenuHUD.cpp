@@ -29,6 +29,8 @@ void AMenuHUD::BeginPlay()
         CreateWidget<UMenuUserWidgetBase>(GetWorld(), this->OptionsHudWidgetClass));
     this->MenuWidgets.Add(EJamMSMenuState::Credits,
         CreateWidget<UMenuUserWidgetBase>(GetWorld(), this->CreditsHudWidgetClass));
+    this->MenuWidgets.Add(EJamMSMenuState::Loading,
+        CreateWidget<UMenuUserWidgetBase>(GetWorld(), this->LoadingHudWidgetClass));
 
     for (const auto Widget : this->MenuWidgets)
     {
