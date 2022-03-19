@@ -11,22 +11,28 @@
 
 void UMenuUserWidgetBase::Print_Menu(ELogVerb TypeVerb, FString Str, int Line, const char* Function) const
 {
-    UJamMSFunctionLibrary::Print_Log(TypeVerb, FString::Printf(TEXT("Name widget: %s"), *GetName()) + Str, Line, Function);
+    UJamMSFunctionLibrary::Print_Log(TypeVerb, FString::Printf(TEXT("Name widget: %s | "), *GetName()) + Str, Line, Function);
 }
 
 void UMenuUserWidgetBase::ShowAnim(UWidgetAnimation* Anim)
 {
     SetupStateButton(EStateObject::Inactive);
+    LOGMENU(ELogVerb::Display, FString::Printf(TEXT("Show animation: %s"), *Anim->GetName()));
     PlayAnimation(Anim);
 
-    // Reset to active button
-    FTimerHandle TimerHandle;
-    FTimerDelegate TimerDelegate;
-    TimerDelegate.BindLambda([this]
+    if (this->StateWidget == EStateObject::Active)
     {
-        SetupStateButton(EStateObject::Active);
-    });
-    GetWorld()->GetTimerManager().SetTimer(TimerHandle, TimerDelegate, Anim->GetEndTime(), false);
+        // Reset to active button
+        FTimerHandle TimerHandle;
+        FTimerDelegate TimerDelegate;
+        TimerDelegate.BindLambda([this]
+        {
+            SetupStateButton(EStateObject::Active);
+        });
+        GetWorld()->GetTimerManager().SetTimer(TimerHandle, TimerDelegate, Anim->GetEndTime(), false);
+        
+        LOGMENU(ELogVerb::Display, FString::Printf(TEXT("Restart button state via: %f"), Anim->GetEndTime()));
+    }
 }
 
 void UMenuUserWidgetBase::ShowAnimTimer(UWidgetAnimation* Anim, float RateTime)
@@ -46,10 +52,13 @@ void UMenuUserWidgetBase::ShowAnimTimer(UWidgetAnimation* Anim, float RateTime)
     FTimerDelegate TimerDelegate;
     TimerDelegate.BindUObject(this, &UMenuUserWidgetBase::ShowAnim, Anim);
     GetWorld()->GetTimerManager().SetTimer(this->TimerHandleShowAnim, TimerDelegate, RateTime, false);
+
+    LOGMENU(ELogVerb::Display, FString::Printf(TEXT("Show Animation: %s via: %f"), *Anim->GetName(), Anim->GetEndTime()));
 }
 
 void UMenuUserWidgetBase::SetupStateButton(EStateObject NewState)
 {
+    if (this->StateWidget == EStateObject::Inactive) return;
     LOGMENU(ELogVerb::Display, FString::Printf(TEXT("New State button: %s"), *UEnum::GetValueAsString(NewState)));
     this->StateButton = NewState;
 }
@@ -77,12 +86,14 @@ void UMenuUserWidgetBase::SetupStateWidget(const EStateObject NewState)
 {
     LOGMENU(ELogVerb::Display, FString::Printf(TEXT("New State widget: %s"), *UEnum::GetValueAsString(NewState)));
     this->StateWidget = NewState;
-    this->StateButton = NewState;
+    SetupStateButton(NewState);
 }
 
 void UMenuUserWidgetBase::NativeOnInitialized()
 {
     Super::NativeOnInitialized();
+
+    LOGMENU(ELogVerb::Display, "Native On Initialized");
     
     this->GameMode = AJamMSGameMode::Get(GetWorld());
     if (!CHECK(this->GameMode != nullptr, "Game mode is nullptr")) return;

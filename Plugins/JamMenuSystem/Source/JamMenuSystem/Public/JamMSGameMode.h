@@ -50,6 +50,17 @@ public:
     UFUNCTION(BlueprintCallable, Category = "AJamMSGameMode|Action")
     void ChangeMenuStateTimer(EJamMSMenuState NewState, float RateTime);
     
+#pragma region ExecCheat
+    
+    /**
+     * @public @exec Change the status of displaying logs on the screen
+     * @param1 EStateShowLog
+     **/
+    UFUNCTION(Exec, Category = "AJamMSGameMode|Exec")
+    static void ChangeStateShowLog(const EStateShowLog NewState);
+    
+#pragma endregion 
+    
 protected:
     
     /** Overridable native event for when play begins for this actor. */
@@ -66,4 +77,6 @@ private:
 
     // Current menu state in Menu Level
     EJamMSMenuState MenuState = EJamMSMenuState::WaitToStart;
+
+    
 };

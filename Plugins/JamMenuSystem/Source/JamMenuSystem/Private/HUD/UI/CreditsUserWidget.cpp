@@ -1,7 +1,12 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
+/**
+  * Maintain: Mark Veligod
+  * GitHub: https://github.com/markveligod
+  * Itch: https://markveligod.itch.io/
+ **/
 
 #include "HUD/UI/CreditsUserWidget.h"
+#include "JamMSGameMode.h"
+#include "Components/Button.h"
 
 void UCreditsUserWidget::SetupStateWidget(const EStateObject NewState)
 {
@@ -19,4 +24,13 @@ void UCreditsUserWidget::SetupStateWidget(const EStateObject NewState)
 void UCreditsUserWidget::NativeOnInitialized()
 {
     Super::NativeOnInitialized();
+
+    this->BackButton->OnClicked.AddDynamic(this, &UCreditsUserWidget::ChangeToMainMenu);
+}
+
+void UCreditsUserWidget::ChangeToMainMenu()
+{
+    if (GetStateButton() == EStateObject::Inactive) return;
+    ShowAnim(BackButtonAnim);
+    GetGameMode()->ChangeMenuStateTimer(EJamMSMenuState::MainMenu, BackButtonAnim->GetEndTime());
 }

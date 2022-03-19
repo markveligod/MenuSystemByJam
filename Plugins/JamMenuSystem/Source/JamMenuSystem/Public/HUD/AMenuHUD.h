@@ -51,7 +51,7 @@ private:
 
     // @private Current sub class on UMenuUserWidgetBase from OptionsHudWidgetClass
     UPROPERTY(EditDefaultsOnly, Category = "UI")
-    TSubclassOf<UMenuUserWidgetBase> OptionsHudWidgetClass;
+    TSubclassOf<UMenuUserWidgetBase> SettingsHudWidgetClass;
 
     // @private Current sub class on UMenuUserWidgetBase from CreditsHudWidgetClass
     UPROPERTY(EditDefaultsOnly, Category = "UI")

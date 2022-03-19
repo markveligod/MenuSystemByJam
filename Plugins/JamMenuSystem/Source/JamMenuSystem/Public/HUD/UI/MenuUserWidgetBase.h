@@ -130,10 +130,10 @@ private:
     UPROPERTY()
     UJamMSGameInstance* GameInst;
     
-    // @protected State widget
+    // @private State widget
     EStateObject StateWidget = EStateObject::Inactive;
 
-    // @protected State Button
+    // @private State Button
     EStateObject StateButton = EStateObject::Inactive;
 
     // @private Animation at the start of visibility

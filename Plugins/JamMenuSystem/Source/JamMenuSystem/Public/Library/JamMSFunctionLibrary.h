@@ -7,6 +7,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "JamMSDataTypes.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "JamMSFunctionLibrary.generated.h"
 
@@ -22,6 +23,9 @@ DEFINE_LOG_CATEGORY_STATIC(LogJamMenuSystem, All, All);
 
 #define CHECK(exp, str) UJamMSFunctionLibrary::Print_Exp(exp, str, __LINE__, __FUNCTION__)
 #define LOGJAM(verb, str) UJamMSFunctionLibrary::Print_Log(verb, str, __LINE__, __FUNCTION__)
+
+//
+EStateShowLog StateShowLog = EStateShowLog::Error;
 
 /**
  * @class Functional library for project support

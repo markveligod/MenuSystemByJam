@@ -13,8 +13,22 @@
 
 AJamMSGameMode::AJamMSGameMode()
 {
+    LOGJAM(ELogVerb::Display, "Game mode contructor");
     HUDClass = AMenuHUD::StaticClass();
     PlayerControllerClass = AMenuPlayerController::StaticClass();
+}
+
+void AJamMSGameMode::BeginPlay()
+{
+    Super::BeginPlay();
+
+    this->GameInst = UJamMSGameInstance::Get(GetWorld());
+    if (!CHECK(this->GameInst != nullptr, "Game instance is nullptr")) return;
+    
+    this->UserSettings = UGameUserSettings::GetGameUserSettings();
+    if (!CHECK(this->UserSettings != nullptr, "User settings is nullptr")) return;
+
+    ChangeMenuStateTimer(EJamMSMenuState::WelcomeToGame, 0.1f);
 }
 
 void AJamMSGameMode::ChangeMenuState(EJamMSMenuState NewState)
@@ -45,17 +59,10 @@ void AJamMSGameMode::ChangeMenuStateTimer(EJamMSMenuState NewState, float RateTi
     GetWorldTimerManager().SetTimer(TimerHandle, TimerDelegate, RateTime, false);
 }
 
-void AJamMSGameMode::BeginPlay()
+#pragma region ExecCheatFunc
+void AJamMSGameMode::ChangeStateShowLog(const EStateShowLog NewState)
 {
-    Super::BeginPlay();
-
-    this->GameInst = UJamMSGameInstance::Get(GetWorld());
-    if (!CHECK(this->GameInst != nullptr, "Game instance is nullptr")) return;
-    
-    this->UserSettings = UGameUserSettings::GetGameUserSettings();
-    if (!CHECK(this->UserSettings != nullptr, "User settings is nullptr")) return;
-
-    ChangeMenuState(EJamMSMenuState::WelcomeToGame);
+    StateShowLog = NewState;
 }
 
-
+#pragma endregion

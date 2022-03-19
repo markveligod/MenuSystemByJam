@@ -32,21 +32,22 @@ void UJamMSFunctionLibrary::Print_Log(ELogVerb TypeVerb, FString Str, int Line, 
     }
 
 #if UE_EDITOR
+
     if (GEngine)
     {
-        if (TypeVerb == ELogVerb::Display)
+        if (TypeVerb == ELogVerb::Display && StateShowLog == EStateShowLog::All)
         {
             GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Blue,
                 (FString("LogJamMenuSystem: Display: [") + ANSI_TO_TCHAR(Function) + "][" + FString::FromInt(Line) +
                     FString(L"] Reason: [") + Str + FString("]")));
         }
-        else if (TypeVerb == ELogVerb::Warning)
+        else if (TypeVerb == ELogVerb::Warning && StateShowLog >= EStateShowLog::Warning)
         {
             GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Yellow,
                     (FString("LogJamMenuSystem: Warning: [") + ANSI_TO_TCHAR(Function) + "][" + FString::FromInt(Line) +
                         FString(L"] Reason: [") + Str + FString("]")));
         }
-        else if (TypeVerb == ELogVerb::Error)
+        else if (TypeVerb == ELogVerb::Error && StateShowLog >= EStateShowLog::Error)
         {
             GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red,
                     (FString("LogJamMenuSystem: Error: [") + ANSI_TO_TCHAR(Function) + "][" + FString::FromInt(Line) +

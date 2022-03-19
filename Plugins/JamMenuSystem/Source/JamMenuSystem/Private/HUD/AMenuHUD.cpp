@@ -18,15 +18,15 @@ void AMenuHUD::BeginPlay()
 
     if (!CHECK(this->WelcomeHudWidgetClass.GetDefaultObject() != nullptr, "WelcomeHudWidgetClass is nullptr")) return;
     if (!CHECK(this->MenuHudWidgetClass.GetDefaultObject() != nullptr, "MenuHudWidgetClass is nullptr")) return;
-    if (!CHECK(this->OptionsHudWidgetClass.GetDefaultObject() != nullptr, "OptionsHudWidgetClass is nullptr")) return;
+    if (!CHECK(this->SettingsHudWidgetClass.GetDefaultObject() != nullptr, "OptionsHudWidgetClass is nullptr")) return;
     if (!CHECK(this->CreditsHudWidgetClass.GetDefaultObject() != nullptr, "CreditsHudWidgetClass is nullptr")) return;
 
     this->MenuWidgets.Add(EJamMSMenuState::WelcomeToGame,
         CreateWidget<UMenuUserWidgetBase>(GetWorld(), this->WelcomeHudWidgetClass));
-    this->MenuWidgets.Add(EJamMSMenuState::InProgress,
+    this->MenuWidgets.Add(EJamMSMenuState::MainMenu,
         CreateWidget<UMenuUserWidgetBase>(GetWorld(), this->MenuHudWidgetClass));
-    this->MenuWidgets.Add(EJamMSMenuState::Options,
-        CreateWidget<UMenuUserWidgetBase>(GetWorld(), this->OptionsHudWidgetClass));
+    this->MenuWidgets.Add(EJamMSMenuState::Settings,
+        CreateWidget<UMenuUserWidgetBase>(GetWorld(), this->SettingsHudWidgetClass));
     this->MenuWidgets.Add(EJamMSMenuState::Credits,
         CreateWidget<UMenuUserWidgetBase>(GetWorld(), this->CreditsHudWidgetClass));
     this->MenuWidgets.Add(EJamMSMenuState::Loading,
@@ -53,6 +53,7 @@ void AMenuHUD::OnMenuStateChanged(EJamMSMenuState NewState)
     {
         FTimerHandle TimerHandle;
         FTimerDelegate TimerDelegate;
+        this->MenuWidget->SetupStateWidget(EStateObject::Inactive);
         this->MenuWidget->ShowAnim(this->MenuWidget->GetEndAnim());
 
         TimerDelegate.BindUObject(this, &AMenuHUD::SwitchWidget, this->MenuWidget, this->MenuWidgets[NewState]);
@@ -81,7 +82,6 @@ void AMenuHUD::SetupNewWidget(UMenuUserWidgetBase* Widget)
 
 void AMenuHUD::SwitchWidget(UMenuUserWidgetBase* OldWidget, UMenuUserWidgetBase* NewWidget)
 {
-    OldWidget->SetupStateWidget(EStateObject::Inactive);
     OldWidget->SetVisibility(ESlateVisibility::Hidden);
     this->MenuWidget = nullptr;
     this->SetupNewWidget(NewWidget);

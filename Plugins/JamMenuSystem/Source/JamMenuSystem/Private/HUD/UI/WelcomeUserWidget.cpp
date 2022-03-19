@@ -12,7 +12,7 @@ void UWelcomeUserWidget::SetupStateWidget(const EStateObject NewState)
     Super::SetupStateWidget(NewState);
     if (NewState == EStateObject::Active)
     {
-        GetGameMode()->ChangeMenuStateTimer(EJamMSMenuState::InProgress, GetStartAnim()->GetEndTime());
+        GetGameMode()->ChangeMenuStateTimer(EJamMSMenuState::MainMenu, GetStartAnim()->GetEndTime());
     }
 }
 

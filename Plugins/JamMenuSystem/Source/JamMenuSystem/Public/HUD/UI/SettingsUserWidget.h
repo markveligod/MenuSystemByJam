@@ -3,38 +3,46 @@
   * GitHub: https://github.com/markveligod
   * Itch: https://markveligod.itch.io/
  **/
+
 #pragma once
 
 #include "CoreMinimal.h"
 #include "HUD/UI/MenuUserWidgetBase.h"
-#include "CreditsUserWidget.generated.h"
+#include "SettingsUserWidget.generated.h"
 
 // Forward declare
 class UButton;
+class UComboBoxString;
+class UCheckBox;
 
 /**
- * @class Widget class for displaying creators
+ * @class For the widget menu by standard settings
  */
 UCLASS()
-class JAMMENUSYSTEM_API UCreditsUserWidget : public UMenuUserWidgetBase
+class JAMMENUSYSTEM_API USettingsUserWidget : public UMenuUserWidgetBase
 {
 	GENERATED_BODY()
-
-public:
-    /**
-     * @public Setup new state widget (Intended for override)
-     * @param1 EStateObject
-     **/
-    virtual void SetupStateWidget(const EStateObject NewState) override;
 
 protected:
     // Native handling for SObjectWidget
     virtual void NativeOnInitialized() override;
 
 private:
-    // Looping animation (ZALUPING :D)
-    UPROPERTY(Transient, meta = (BindWidgetAnim))
-    UWidgetAnimation* LoopAnim;
+    // @private Switch for music
+    UPROPERTY(Transient, meta = (BindWidget))
+    UCheckBox* MusicCheckBox;
+    
+    // @private Switch for sound
+    UPROPERTY(Transient, meta = (BindWidget))
+    UCheckBox* SoundCheckBox;
+
+    // @private list of available screen resolutions
+    UPROPERTY(Transient, meta = (BindWidget))
+    UComboBoxString* ResolutionComboBoxString;
+
+    // @private list of available Language
+    UPROPERTY(Transient, meta = (BindWidget))
+    UComboBoxString* LanguageComboBoxString;
 
     // @private Button close to Main menu
     UPROPERTY(Transient, meta = (BindWidget))

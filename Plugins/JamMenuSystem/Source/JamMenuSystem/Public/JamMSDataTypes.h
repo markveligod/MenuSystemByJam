@@ -14,8 +14,8 @@ enum class EJamMSMenuState : uint8
 {
     WaitToStart = 0,
     WelcomeToGame,
-    InProgress,
-    Options,
+    MainMenu,
+    Settings,
     Credits,
     Loading
 };
@@ -29,4 +29,13 @@ enum class EStateObject: uint8
 {
     Active,
     Inactive
+};
+
+/* Defines the status to display on the screen */
+UENUM()
+enum class EStateShowLog : uint8
+{
+    Error = 0,
+    Warning,
+    All
 };
