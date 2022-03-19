@@ -4,13 +4,8 @@
 /*.sln
 
 #Trash
-/DerivedDataCache/*
 /Intermediate/*
-/Saved/*
 /Binaries/*
-
-Plugins/*/Binaries/*
-Plugins/*/Intermediate/*
 
 # Built data for maps
 *_BuiltData.uasset
