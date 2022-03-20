@@ -4,8 +4,8 @@
   * Itch: https://markveligod.itch.io/
  **/
 
-#include "HUD/UI/WelcomeUserWidget.h"
-#include "JamMSGameMode.h"
+#include "Menu/HUD/UI/WelcomeUserWidget.h"
+#include "Menu/JamMSGameMode.h"
 
 void UWelcomeUserWidget::SetupStateWidget(const EStateObject NewState)
 {

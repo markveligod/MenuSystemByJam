@@ -11,6 +11,9 @@ public class JamMenuSystem : ModuleRules
 		PublicIncludePaths.AddRange(
 			new string[] {
 				// ... add public include paths required here ...
+				"JamMenuSystem",
+				"JamMenuSystem/Public",
+				"JamMenuSystem/Public/Menu"
 			}
 			);
 				

@@ -4,10 +4,10 @@
   * Itch: https://markveligod.itch.io/
  **/
 
-#include "HUD/AMenuHUD.h"
-#include "JamMSGameMode.h"
+#include "Menu/HUD/AMenuHUD.h"
+#include "Menu/JamMSGameMode.h"
 #include "Library/JamMSFunctionLibrary.h"
-#include "HUD/UI/MenuUserWidgetBase.h"
+#include "Menu/HUD/UI/MenuUserWidgetBase.h"
 
 void AMenuHUD::BeginPlay()
 {

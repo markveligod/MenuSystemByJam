@@ -4,11 +4,11 @@
   * Itch: https://markveligod.itch.io/
  **/
 
-#include "JamMSGameMode.h"
+#include "Menu/JamMSGameMode.h"
 #include "JamMSGameInstance.h"
-#include "MenuPlayerController.h"
+#include "Menu/MenuPlayerController.h"
 #include "GameFramework/GameUserSettings.h"
-#include "HUD/AMenuHUD.h"
+#include "Menu/HUD/AMenuHUD.h"
 #include "Library/JamMSFunctionLibrary.h"
 
 AJamMSGameMode::AJamMSGameMode()

@@ -4,9 +4,9 @@
   * Itch: https://markveligod.itch.io/
  **/
 
-#include "HUD/UI/MenuUserWidgetBase.h"
+#include "Menu/HUD/UI/MenuUserWidgetBase.h"
 #include "JamMSGameInstance.h"
-#include "JamMSGameMode.h"
+#include "Menu/JamMSGameMode.h"
 #include "Library/JamMSFunctionLibrary.h"
 
 void UMenuUserWidgetBase::Print_Menu(ELogVerb TypeVerb, FString Str, int Line, const char* Function) const

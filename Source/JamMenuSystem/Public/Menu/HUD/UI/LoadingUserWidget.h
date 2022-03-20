@@ -6,7 +6,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "HUD/UI/MenuUserWidgetBase.h"
+#include "Menu/HUD/UI/MenuUserWidgetBase.h"
 #include "LoadingUserWidget.generated.h"
 
 /**

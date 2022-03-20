@@ -4,8 +4,8 @@
   * Itch: https://markveligod.itch.io/
  **/
 
-#include "HUD/UI/CreditsUserWidget.h"
-#include "JamMSGameMode.h"
+#include "Menu/HUD/UI/CreditsUserWidget.h"
+#include "Menu/JamMSGameMode.h"
 #include "Components/Button.h"
 
 void UCreditsUserWidget::SetupStateWidget(const EStateObject NewState)

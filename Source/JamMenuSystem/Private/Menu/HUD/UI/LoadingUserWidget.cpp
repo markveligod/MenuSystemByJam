@@ -4,7 +4,7 @@
   * Itch: https://markveligod.itch.io/
  **/
 
-#include "HUD/UI/LoadingUserWidget.h"
+#include "Menu/HUD/UI/LoadingUserWidget.h"
 #include "JamMSGameInstance.h"
 #include "Kismet/GameplayStatics.h"
 

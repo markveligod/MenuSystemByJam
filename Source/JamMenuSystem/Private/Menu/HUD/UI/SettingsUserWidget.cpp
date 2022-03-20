@@ -4,8 +4,8 @@
   * Itch: https://markveligod.itch.io/
  **/
 
-#include "HUD/UI/SettingsUserWidget.h"
-#include "JamMSGameMode.h"
+#include "Menu/HUD/UI/SettingsUserWidget.h"
+#include "Menu/JamMSGameMode.h"
 #include "Components/Button.h"
 
 void USettingsUserWidget::NativeOnInitialized()

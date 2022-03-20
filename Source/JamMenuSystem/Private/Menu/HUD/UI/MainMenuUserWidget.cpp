@@ -3,8 +3,8 @@
   * GitHub: https://github.com/markveligod
   * Itch: https://markveligod.itch.io/
  **/
-#include "HUD/UI/MainMenuUserWidget.h"
-#include "JamMSGameMode.h"
+#include "Menu/HUD/UI/MainMenuUserWidget.h"
+#include "Menu/JamMSGameMode.h"
 #include "Components/Button.h"
 #include "Kismet/KismetSystemLibrary.h"
 
