@@ -56,4 +56,16 @@ private:
      **/
     UFUNCTION()
     void ChangeToMainMenu();
+
+    /**
+     * @private Change music volume class
+     **/
+    UFUNCTION()
+    void ChangeMusicVolume(bool bIsChecked);
+
+    /**
+     * @private Change sound volume class
+     **/
+    UFUNCTION()
+    void ChangeSoundVolume(bool bIsChecked);
 };

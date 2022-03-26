@@ -67,7 +67,21 @@ public:
      **/
     UFUNCTION(BlueprintPure, Category = "UJamMSGameInstance|GetData")
     FORCEINLINE float GetDefaultSoundVolumeValue() const { return this->DefaultSoundVolumeValue; }
-    
+
+    /**
+    * @public Getting array screen size
+    * @return TArray<FIntPoint>
+    **/
+    UFUNCTION(BlueprintPure, Category = "UJamMSGameInstance|GetData")
+    FORCEINLINE TArray<FIntPoint> GetArrayWindowedScreenSize() const { return this->ArrayWindowedScreenSize; }
+
+    /**
+    * @public Getting selected screen size
+    * @return FIntPoint
+    **/
+    UFUNCTION(BlueprintPure, Category = "UJamMSGameInstance|GetData")
+    FORCEINLINE FIntPoint GetSelectedScreenSize() const { return this->SelectedScreenSize; }
+
 #pragma endregion
 
 #pragma region SetData
@@ -97,4 +111,10 @@ private:
     USoundClass* SoundMenuClass;
     UPROPERTY(EditDefaultsOnly, Category = "Volume Editor", meta = (ClampMin = "0.0", ClampMax = "100.0"))
     float DefaultSoundVolumeValue = 50.f;
+
+    // Array of available screen resolutions
+    TArray <FIntPoint> ArrayWindowedScreenSize;
+
+    // Selected screen size
+    FIntPoint SelectedScreenSize;
 };
