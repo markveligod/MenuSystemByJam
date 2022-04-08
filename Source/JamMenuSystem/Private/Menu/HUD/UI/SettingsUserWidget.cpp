@@ -10,6 +10,7 @@
 #include "Components/Button.h"
 #include "Components/CheckBox.h"
 #include "Components/ComboBoxString.h"
+#include "GameFramework/GameUserSettings.h"
 
 void USettingsUserWidget::NativeOnInitialized()
 {
@@ -30,6 +31,7 @@ void USettingsUserWidget::NativeOnInitialized()
         this->ResolutionComboBoxString->AddOption(FString::FromInt(Point.X) + "x" + FString::FromInt(Point.Y));
     }
     this->ResolutionComboBoxString->SetSelectedOption(UJamMSFunctionLibrary::GetStringSizeScreen(GetGameInst()->GetSelectedScreenSize()));
+    this->ResolutionComboBoxString->OnSelectionChanged.AddDynamic(this, &USettingsUserWidget::ChangeSelectedScreenSize);
 }
 
 void USettingsUserWidget::ChangeToMainMenu()
@@ -59,3 +61,24 @@ void USettingsUserWidget::ChangeSoundVolume(bool bIsChecked)
     GetGameInst()->GetSoundMenuClass()->Properties.Volume = bIsChecked ? GetGameInst()->GetDefaultSoundVolumeValue() / VALUE_PERCENT : 0.0f;
 }
 
+void USettingsUserWidget::ChangeSelectedScreenSize(FString SelectedItem, ESelectInfo::Type SelectionType)
+{
+    LOGMENU(ELogVerb::Display, FString::Printf(TEXT("Selected item: %s | Selection type: %s"), *SelectedItem, *UEnum::GetValueAsString(SelectionType)));
+    if (SelectionType == ESelectInfo::OnMouseClick)
+    {
+        UGameUserSettings* GameUserSettings = UGameUserSettings::GetGameUserSettings();
+        if (!GameUserSettings)
+        {
+            LOGMENU(ELogVerb::Error, FString("Game user settings is nullptr"));
+            return;
+        }
+        const FIntPoint Point = UJamMSFunctionLibrary::GetSizeScreenFromString(SelectedItem);
+        if (Point.X == 0 || Point.Y == 0)
+        {
+            LOGMENU(ELogVerb::Error, FString::Printf(TEXT("Incorrect value screen size: X - %i | Y - %i"), Point.X, Point.Y));
+            return;
+        }
+        GameUserSettings->SetScreenResolution(Point);
+        GameUserSettings->ApplySettings(false);
+    }
+}

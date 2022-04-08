@@ -51,4 +51,8 @@ public:
     // @public Get string size screen from FIntPoint
     UFUNCTION(BlueprintPure, Category = "JamMSFunctionLibrary")
     static FString GetStringSizeScreen(const FIntPoint Point) { return FString::FromInt(Point.X) + "x" + FString::FromInt(Point.Y); }
+
+    // @public Get FIntPoint size screen from string
+    UFUNCTION(BlueprintPure, Category = "JamMSFunctionLibrary")
+    static FIntPoint GetSizeScreenFromString(const FString Str);
 };

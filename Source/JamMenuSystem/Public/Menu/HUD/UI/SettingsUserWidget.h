@@ -68,4 +68,11 @@ private:
      **/
     UFUNCTION()
     void ChangeSoundVolume(bool bIsChecked);
+
+    /**
+     * @private Change sound volume class
+     **/
+    UFUNCTION()
+    void ChangeSelectedScreenSize(FString SelectedItem, ESelectInfo::Type SelectionType);
 };
+

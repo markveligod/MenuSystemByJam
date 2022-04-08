@@ -5,6 +5,7 @@
  **/
 
 #include "JamMSGameInstance.h"
+#include "GameFramework/GameUserSettings.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Library/JamMSFunctionLibrary.h"
 
@@ -38,5 +39,11 @@ void UJamMSGameInstance::Init()
             *UJamMSFunctionLibrary::GetStringSizeScreen(this->SelectedScreenSize)));
     }
 
-    
+    UGameUserSettings* GameUserSettings = UGameUserSettings::GetGameUserSettings();
+    if (GameUserSettings)
+    {
+        GameUserSettings->SetFullscreenMode(EWindowMode::Windowed);
+        GameUserSettings->SetScreenResolution(this->SelectedScreenSize);
+        GameUserSettings->ApplySettings(false);
+    }
 }

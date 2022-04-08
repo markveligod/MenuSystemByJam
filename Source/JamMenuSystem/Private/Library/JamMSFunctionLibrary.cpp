@@ -57,3 +57,19 @@ void UJamMSFunctionLibrary::Print_Log(ELogVerb TypeVerb, FString Str, int Line, 
     
 #endif
 }
+
+FIntPoint UJamMSFunctionLibrary::GetSizeScreenFromString(const FString Str)
+{
+    FIntPoint Point;
+
+    if (Str.IsEmpty()) return Point;
+
+    TArray<FString> TempParseArray;
+    Str.ParseIntoArray(TempParseArray, TEXT("x"));
+    if (TempParseArray.Num() < 2) return Point;
+    
+    Point.X = FCString::Atoi(*TempParseArray[0]);
+    Point.Y = FCString::Atoi(*TempParseArray[1]);
+
+    return Point;
+}
