@@ -30,8 +30,23 @@ void USettingsUserWidget::NativeOnInitialized()
     {
         this->ResolutionComboBoxString->AddOption(FString::FromInt(Point.X) + "x" + FString::FromInt(Point.Y));
     }
-    this->ResolutionComboBoxString->SetSelectedOption(UJamMSFunctionLibrary::GetStringSizeScreen(GetGameInst()->GetSelectedScreenSize()));
+
+    const UGameUserSettings* GameUserSettings = UGameUserSettings::GetGameUserSettings();
+    if (!GameUserSettings)
+    {
+        LOGMENU(ELogVerb::Error, FString("Game user settings is nullptr"));
+        return;
+    }
+
+    this->ResolutionComboBoxString->SetSelectedOption(UJamMSFunctionLibrary::GetStringSizeScreen(GameUserSettings->GetScreenResolution()));
     this->ResolutionComboBoxString->OnSelectionChanged.AddDynamic(this, &USettingsUserWidget::ChangeSelectedScreenSize);
+
+    this->LanguageComboBoxString->ClearOptions();
+    this->LanguageComboBoxString->AddOption(FString("English"));
+    this->LanguageComboBoxString->AddOption(FString("Russian"));
+    this->LanguageComboBoxString->SetSelectedOption(GetGameInst()->GetLangGame() == "ru" ? "Russian" : "English");
+    this->LanguageComboBoxString->OnSelectionChanged.AddDynamic(this, &USettingsUserWidget::ChangeLangGame);
+
 }
 
 void USettingsUserWidget::ChangeToMainMenu()
@@ -80,5 +95,14 @@ void USettingsUserWidget::ChangeSelectedScreenSize(FString SelectedItem, ESelect
         }
         GameUserSettings->SetScreenResolution(Point);
         GameUserSettings->ApplySettings(false);
+    }
+}
+
+void USettingsUserWidget::ChangeLangGame(FString SelectedItem, ESelectInfo::Type SelectionType)
+{
+    LOGMENU(ELogVerb::Display, FString::Printf(TEXT("Selected item: %s | Selection type: %s"), *SelectedItem, *UEnum::GetValueAsString(SelectionType)));
+    if (SelectionType == ESelectInfo::OnMouseClick)
+    {
+        GetGameInst()->SetupLangGame((SelectedItem == "English") ? "en" : "ru");
     }
 }

@@ -74,5 +74,11 @@ private:
      **/
     UFUNCTION()
     void ChangeSelectedScreenSize(FString SelectedItem, ESelectInfo::Type SelectionType);
+
+    /**
+     * @private Change language game
+     **/
+    UFUNCTION()
+    void ChangeLangGame(FString SelectedItem, ESelectInfo::Type SelectionType);
 };
 

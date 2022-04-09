@@ -76,15 +76,23 @@ public:
     FORCEINLINE TArray<FIntPoint> GetArrayWindowedScreenSize() const { return this->ArrayWindowedScreenSize; }
 
     /**
-    * @public Getting selected screen size
-    * @return FIntPoint
+    * @public Getting language game
+    * @return FString
     **/
     UFUNCTION(BlueprintPure, Category = "UJamMSGameInstance|GetData")
-    FORCEINLINE FIntPoint GetSelectedScreenSize() const { return this->SelectedScreenSize; }
+    FORCEINLINE FString GetLangGame() const { return this->LangGame; }
 
 #pragma endregion
 
 #pragma region SetData
+
+    /**
+    * @public Setting language game
+    * @param1 FString
+    **/
+    UFUNCTION(BlueprintCallable, Category = "UJamMSGameInstance|SetData")
+    void SetupLangGame(const FString NewLang);
+
 #pragma endregion
 
 protected:
@@ -95,26 +103,36 @@ protected:
     
 private:
     /* level names for interaction from other classes */
-    
+
+    // Level start name
     UPROPERTY(EditDefaultsOnly, Category = "Levels Editor")
     FName NameStartLevel = NAME_None;
+
+    // Level menu name
     UPROPERTY(EditDefaultsOnly, Category = "Levels Editor")
     FName NameMenuLevel = NAME_None;
 
     /* Volume editor for sound classes */
-    
+
+    // Music menu class
     UPROPERTY(EditDefaultsOnly, Category = "Volume Editor")
     USoundClass* MusicMenuClass;
+
+    // Default value music volume
     UPROPERTY(EditDefaultsOnly, Category = "Volume Editor", meta = (ClampMin = "0.0", ClampMax = "100.0"))
     float DefaultMusicVolumeValue = 50.f;
+
+    // Sound menu class
     UPROPERTY(EditDefaultsOnly, Category = "Volume Editor")
     USoundClass* SoundMenuClass;
+
+    // Default value sound volume
     UPROPERTY(EditDefaultsOnly, Category = "Volume Editor", meta = (ClampMin = "0.0", ClampMax = "100.0"))
     float DefaultSoundVolumeValue = 50.f;
-
+    
     // Array of available screen resolutions
     TArray <FIntPoint> ArrayWindowedScreenSize;
 
-    // Selected screen size
-    FIntPoint SelectedScreenSize;
+    // Current language game
+    FString LangGame;
 };

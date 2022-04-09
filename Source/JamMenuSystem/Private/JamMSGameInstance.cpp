@@ -6,6 +6,7 @@
 
 #include "JamMSGameInstance.h"
 #include "GameFramework/GameUserSettings.h"
+#include "Kismet/KismetInternationalizationLibrary.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Library/JamMSFunctionLibrary.h"
 
@@ -34,16 +35,28 @@ void UJamMSGameInstance::Init()
 
     if (this->ArrayWindowedScreenSize.Num() > 0)
     {
-        this->SelectedScreenSize = this->ArrayWindowedScreenSize[0];
         LOGJAM(ELogVerb::Display, FString::Printf(TEXT("Selected default screen size: %s"),
-            *UJamMSFunctionLibrary::GetStringSizeScreen(this->SelectedScreenSize)));
+            *UJamMSFunctionLibrary::GetStringSizeScreen(this->ArrayWindowedScreenSize[0])));
+        
+        UGameUserSettings* GameUserSettings = UGameUserSettings::GetGameUserSettings();
+        if (GameUserSettings)
+        {
+            GameUserSettings->SetFullscreenMode(EWindowMode::Windowed);
+            GameUserSettings->SetScreenResolution(this->ArrayWindowedScreenSize[0]);
+            GameUserSettings->ApplySettings(false);
+        }
     }
 
-    UGameUserSettings* GameUserSettings = UGameUserSettings::GetGameUserSettings();
-    if (GameUserSettings)
+    this->LangGame = UKismetSystemLibrary::GetDefaultLanguage();
+    if (!LangGame.IsEmpty())
     {
-        GameUserSettings->SetFullscreenMode(EWindowMode::Windowed);
-        GameUserSettings->SetScreenResolution(this->SelectedScreenSize);
-        GameUserSettings->ApplySettings(false);
+        LOGJAM(ELogVerb::Display, FString::Printf(TEXT("Lang game: %s"), *this->LangGame));
+        this->SetupLangGame((this->LangGame != "ru" && this->LangGame != "ru-RU" ) ? "en" : "ru");
     }
+}
+
+void UJamMSGameInstance::SetupLangGame(const FString NewLang)
+{
+    this->LangGame = NewLang;
+    UKismetInternationalizationLibrary::SetCurrentCulture(this->LangGame);
 }
