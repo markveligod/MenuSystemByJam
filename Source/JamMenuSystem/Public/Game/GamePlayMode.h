@@ -1,4 +1,8 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+/**
+  * Maintain: Mark Veligod
+  * GitHub: https://github.com/markveligod
+  * Itch: https://markveligod.itch.io/
+ **/
 
 #pragma once
 
@@ -13,5 +17,8 @@ UCLASS()
 class JAMMENUSYSTEM_API AGamePlayMode : public AGameModeBase
 {
 	GENERATED_BODY()
-	
+
+public:
+    // Get singleton class
+    static AGamePlayMode* Get(UWorld* World) { return (World) ? Cast<AGamePlayMode>(World->GetAuthGameMode()) : nullptr; }
 };

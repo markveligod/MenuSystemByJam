@@ -1,5 +1,8 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
+/**
+  * Maintain: Mark Veligod
+  * GitHub: https://github.com/markveligod
+  * Itch: https://markveligod.itch.io/
+ **/
 
 #include "Game/GamePlayMode.h"
 

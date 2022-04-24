@@ -1,7 +1,7 @@
 {
 	"FileVersion": 3,
 	"Version": 1,
-	"VersionName": "1.0",
+	"VersionName": "1.1",
 	"FriendlyName": "JamMenuSystem",
 	"Description": "The menu is a system that will allow you to make games faster on jams",
 	"Category": "Other",
