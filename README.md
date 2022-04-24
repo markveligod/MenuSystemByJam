@@ -1,5 +1,8 @@
 # :taurus: Menu System By Jam (Documentation)
 
+## Old video example
+[![OMG](https://img.youtube.com/vi/AMrR0rXK7tw/0.jpg)](https://www.youtube.com/watch?v=AMrR0rXK7tw)
+
 ## :wastebasket: How to use this nonsense ?  
 1. git clone `https://github.com/markveligod/MenuSystemByJam.git`
 2. Put it in the `Plugins` folder with the project (Example: `YourNameProject/Plugins/MenuSystemByJam`)
