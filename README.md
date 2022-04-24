@@ -23,6 +23,27 @@ To see the plugin in the content browser, you need to go to `View Options` and E
 ![](https://cdn.discordapp.com/attachments/836541085248520233/967412018715979786/unknown.png)  
 4. Done!
 
+## Debug feature
+I have written simple functions for rendering any debug information on the screen. To do this, you need to inherit from the DebugHUD class and override Draw function in a AHUD class.  
+Example:  
+```
+void AGameHUD::DrawHUD()
+{
+    Super::DrawHUD();
+
+    if (this->GameMode && EnableDebugHUD)
+    {
+        AddText(TEXT("Test function AddText"), FText::FromString("This AddText"));
+        AddFloat(TEXT("Test function AddFloat"), 1.488f);
+        AddInt(TEXT("Test function AddInt"), 228);
+        AddBool(TEXT("Test function AddBool"), false);
+        AddBool(TEXT("Test function AddBool"), true);
+    }
+}
+```  
+Result:  
+![](https://cdn.discordapp.com/attachments/836541085248520233/967741234934341732/unknown.png)  
+
 ## 📫 Other
 :bangbang: Attention: If you can improve my trash code then make a pull request.  
 :bangbang: Attention: If you still have questions, write to the section Issues.
